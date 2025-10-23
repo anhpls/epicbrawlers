@@ -1,12 +1,12 @@
-# 🎮 Epic Brawlers: Idle RPG
+# Epic Brawlers: Idle RPG
 
 A simple Java Swing click-to-fight game demonstrating object-oriented design and event-driven GUI programming.
 
 ---
 
-## 🧩 Overview
+## Overview
 
-**Epic Brawlers: Idle RPG** is a lightweight, idle-style boss-battler built entirely with **Java Swing**.  
+**Epic Brawlers: Idle RPG** is an idle-style boss-battler built entirely with **Java Swing**.  
 The player fights through an endless series of bosses, earns gold, upgrades their weapon, and advances through stages of increasing difficulty.
 
 The project was created for a CISC 191 Object-Oriented Programming course to showcase:
@@ -18,7 +18,7 @@ The project was created for a CISC 191 Object-Oriented Programming course to sho
 
 ---
 
-## ⚔️ Gameplay
+## Gameplay
 
 1. **Attack** — Each click starts a combat round.
    - The player deals damage to the boss.
@@ -31,7 +31,7 @@ The project was created for a CISC 191 Object-Oriented Programming course to sho
 
 ---
 
-## 🖥️ GUI
+## GUI
 
 Built using **Java Swing**:
 
@@ -73,7 +73,7 @@ Future updates will include subclasses like `SlimeBoss` and `DragonBoss` for var
 
 ---
 
-## 🧰 Installation & Run
+## Installation & Run
 
 ### Requirements
 
