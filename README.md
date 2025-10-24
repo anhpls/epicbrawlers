@@ -44,7 +44,7 @@ Future versions will use **CardLayout** to switch between the main battle screen
 
 ---
 
-## 🧱 Classes
+## Classes
 
 | Class      | Role                                                                                      |
 | ---------- | ----------------------------------------------------------------------------------------- |
@@ -55,7 +55,7 @@ Future versions will use **CardLayout** to switch between the main battle screen
 
 ---
 
-## 🧠 Object-Oriented Design
+## Object-Oriented Design
 
 **Aggregation:**  
 `GameUI` _has-a_ `Player` and a `Boss`, keeping logic modular and independent.
@@ -70,19 +70,3 @@ Future updates will include subclasses like `SlimeBoss` and `DragonBoss` for var
 
 - **Model:** `Player`, `Boss`
 - **View + Controller:** `GameUI` (buttons trigger event listeners that update the model and refresh the view)
-
----
-
-## Installation & Run
-
-### Requirements
-
-- Java JDK 17 or newer
-- Any IDE (Eclipse, IntelliJ, VS Code) or command line
-
-### Compile & Run
-
-```bash
-javac *.java
-java App
-```

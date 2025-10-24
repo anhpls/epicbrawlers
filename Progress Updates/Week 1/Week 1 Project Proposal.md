@@ -6,7 +6,7 @@ Anh Huynh
 
 ### Project Pitch
 
-**Game Title:** Epic Brawlers: Idle RPG
+**Game Title:** Epic Brawlers
 
 **Description:** 
 *Epic Brawlers* is a click-to-fight boss game built with Java Swing. The player faces one enemy boss at a time. Clicking **attack** inflicts damage; defeating a boss awards gold, which the player can spend on **weapon upgrades** to increase damage per click. Selecting to move onto the **Next Boss** spawns a tougher opponent with higher health and larger rewards. 
@@ -21,27 +21,27 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 - Clicks **Attack** —> Boss HP decreases. If HP <= 0, the boss dies, the player earns gold, and a new boss appears.
 - Clicks **Upgrade Weapon** —> if enough gold, the player's weapon level increases, raising it's attack damage
 - Clicks **Next Boss** —> Generates the next-tier boss.
-- Stage Progression —> defeating a boss allows to advance to the next stage
-- Death/Reset —> if HP <= 0, the player restarts at Stage 1, fully healed.
+- **Stage Progression** —> defeating a boss allows to advance to the next stage
+- **Death/Reset** —> if HP <= 0, the player restarts at Stage 1, fully healed.
 
 
 
 ### GUI Preview
 
-
+![image-20251022212033373](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/Epic Brawlers/Progress Updates/Week 1/assets/image-20251022212033373.png)
 
 
 
 ### CRC Cards
 
 **Player:** tracks gold, level, damage, hp; handles upgrades and taking damage. 
-Collaborator(s): *Boss*
+**Collaborator(s):** *Boss*
 
 **Boss:** stores hp, maxHp, reward, attack, stage; handles taking damage
-Collaborator(s): *Player*
+**Collaborator(s):** *Player*
 
 **GameUI:** manages GUI display and logic; responds to button clicks; updates HP bars and stage progression
-Collaborator(s): *Player, Boss*
+**Collaborator(s):** *Player, Boss*
 
 
 
@@ -49,9 +49,7 @@ Collaborator(s): *Player, Boss*
 
 
 
-
-
-
+![EpicBrawlersUML.drawio](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/Epic Brawlers/Progress Updates/Week 1/assets/EpicBrawlersUML.drawio-1261124.png)
 
 
 
@@ -71,13 +69,26 @@ Collaborator(s): *Player, Boss*
 
 ### Learning Outcomes
 
-
+| LO                                                           | Demonstrated in Epic Brawlers                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| LO1: Object Oriented Design Principles                       | Clear separation of classes; encapsulated Player/Boss classes; GUI/controller in GameUI class |
+| LO2: ·  LO2: Construct programs utilizing single and multidimensional arrays (optional) | Optional                                                     |
+| LO3: Objects & Aggregation                                   | GameUI aggregates Player and Boss and coordinates their interactions |
+| LO4: Inheritance & polymorphism                              | Planned boss hierarchy (e.g., BaseBoss —> SlimeBoss, DragonBoss) without changing controller code |
+| LO6: GUI & Event-Driven Programming                          | Swing (JFrame, JButton, JLabel, JProgressBar) with ActionListener callbacks for attacks/upgrades |
+| LO7: Exception handling                                      | Handling for insufficient funds on upgrade; safe HP bounds; death/reset flow |
+| LO8: Text File I/O                                           | Save/load player progress (gold, level) to a simple text file |
 
 
 
 ### Planned Working Time
 
-
+| Week   | Hours (outside class)                        |
+| ------ | -------------------------------------------- |
+| Week 1 | Thurs 3-5 PM + Fri 6-8 PM                    |
+| Week 2 | Thurs 3-5 PM + Fri 6-8 PM                    |
+| Week 3 | Thurs 3-5 PM + Fri 6-8 PM / Sat 11 AM - 2 PM |
+| Week 4 | Thurs 3-5 PM + Fri 6-8 PM / Sat 11 AM - 2 PM |
 
 
 
@@ -98,3 +109,4 @@ Collaborator(s): *Player, Boss*
 
 ### GitHub Repository
 
+https://github.com/anhpls/epicbrawlers
