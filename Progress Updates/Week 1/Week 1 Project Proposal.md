@@ -43,7 +43,11 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 **GameUI:** manages GUI display and logic; responds to button clicks; updates HP bars and stage progression
 **Collaborator(s):** *Player, Boss*
 
+***BaseWeapon:** base class for all weapons; defines common fields (name, damage, level) and methods for attacking and upgrading
 
+**Collaborator(s):** *Player, Boss*
+
+*= possibly added in future 
 
 ### **UML Diagram:** 
 
@@ -63,7 +67,7 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 
 
 
-##### Video Link: 
+### Video Link: https://youtu.be/fAck9a8_tyI
 
 
 
@@ -85,10 +89,11 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 
 | Week   | Hours (outside class)                        |
 | ------ | -------------------------------------------- |
-| Week 1 | Thurs 3-5 PM + Fri 6-8 PM                    |
-| Week 2 | Thurs 3-5 PM + Fri 6-8 PM                    |
-| Week 3 | Thurs 3-5 PM + Fri 6-8 PM / Sat 11 AM - 2 PM |
-| Week 4 | Thurs 3-5 PM + Fri 6-8 PM / Sat 11 AM - 2 PM |
+| Week 1 | Thurs 2-5 PM + Fri 6-9 PM                    |
+| Week 2 | Thurs 2-5 PM + Fri 6-9 PM                    |
+| Week 3 | Thurs 2-5 PM + Fri 6-9 PM / Sat 11 AM - 2 PM |
+| Week 4 | Thurs 2-5 PM + Fri 6-9 PM / Sat 11 AM - 2 PM |
+| "…"    | "…"                                          |
 
 
 
@@ -98,12 +103,12 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 | ---- | ------------------------------------------------------------ |
 | 1    | Write proposal; design CRC cards and UML; set up project files. |
 | 2    | Implement Player and Boss classes; test damage logic and gold system. |
-| 3    | Finalize model logic; draw GUI layout plan.                  |
+| 3    | Finalize model logic; create beta GUI layout. Implement rough codes for all other classes |
 | 4    | Test and refine attack flow; prepare a simple non-functional GUI. |
-| 5    | Build the GUI (view) and display live HP updates.            |
+| 5    | Test the GUI (view) and display live HP updates.             |
 | 6    | Connect event handling (controller) for attack and upgrade buttons. |
 | 7    | Debug and polish stage progression and death/reset behavior. |
-| 8    | Record video demonstration; finalize all documentation and code. |
+| 8    | Finalize all documentation and code; thorough testing        |
 
 
 
