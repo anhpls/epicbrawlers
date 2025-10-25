@@ -4,25 +4,66 @@
 
 **Instructions: Create a document, and edit (and delete as appropriate) the text in <span style="color: red">red</span> during the appropriate week.** Do **not** change what you have written in previous weeks! If you prefer, you may embed a Word/PDF document under each Week header. Do not link to a Google Doc; if you want to use a Google Doc you can export to PDF and embed the PDF in this page. Submit your document each week in the Project Assignment.
 
+
+
 ## Week 1: Project Proposal
+
+
 
 ### Project Pitch
 
-<span style="color: red"> Think about how a pitch on a crowdsourced funding platform (like Kickstarter or GoFundMe) might look. You should have several paragraphs describing your project, and some “faked” screenshots. For the “faked” screenshots, you should mock-up the way the program will look when it runs, without actually writing the program. At this point, your “faked” screenshots may be hand drawn or be created with a drawing program; they should include a GUI design or a sample of program text output.</span>
+**Game Title:** Epic Brawlers
 
-<span style="color: red">Include information about how the user interacts with the program (e.g. what happens when the user clicks on a button or types in a text field?).</span>
+**Description:** 
+*Epic Brawlers* is a click-to-fight boss game built with Java Swing. The player faces one enemy boss at a time. Clicking **attack** inflicts damage; defeating a boss awards gold, which the player can spend on **weapon upgrades** to increase damage per click. Selecting to move onto the **Next Boss** spawns a tougher opponent with higher health and larger rewards. 
+
+All gameplay happens through GUI components — buttons, labels, and a progress bar. There's no player movement; instead, progression focuses on stages, upgrades, and incremental strength.
+
+**Gameplay each round:**
+When the player clicks Attack, the player deals damage to the boss, and immediately after, the boss attacks back. This ensures that both sides lose HP each round. When the boss's HP reaches 0, the player earns gold and has the option to upgrade their weapon (upgrades unavailable if funds are insufficient) or advance to the next stage, where the next boss has higher HP, greater attack damage, and better rewards.
+
+**User actions:**
+
+- Clicks **Attack** —> Boss HP decreases. If HP <= 0, the boss dies, the player earns gold, and a new boss appears.
+- Clicks **Upgrade Weapon** —> if enough gold, the player's weapon level increases, raising it's attack damage
+- Clicks **Next Boss** —> Generates the next-tier boss.
+- **Stage Progression** —> defeating a boss allows to advance to the next stage
+- **Death/Reset** —> if HP <= 0, the player restarts at Stage 1, fully healed.
+
+
 
 ### CRC Cards
 
-<span style="color: red">Include the CRC cards that you created. You can take a picture of physical index cards, include a screenshot of CRC cards created on your computer, or use tables to create the cards on this page.</span>
+| Class       | Responsibilities                                             | Collaborator(s) |
+| ----------- | ------------------------------------------------------------ | --------------- |
+| Player      | Tracks gold, level, damage, HP; handles upgrades and taking damage | Boss            |
+| Boss        | Stores HP, max HP, reward, attack, and stage; handles taking damage | Player          |
+| GameUI      | Manages GUI display and logic; responds to button clicks; updates HP bars and stage progression | Player, Boss    |
+| BaseWeapon* | Base class for all weapons; defines common fields (name, damage, level) and methods for attacking and upgrading | Player, Boss    |
+
+*May be added while working on this
+
+
 
 ### UML Diagram
 
-<span style="color: red">Include a UML diagram or other description of the classes and interfaces you anticipate needing to write, including details about fields and methods, and class/interface responsibilities.</span>
+![EpicBrawlersUML.drawio](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/Epic Brawlers/Progress Updates/Prompt:Template/assets/EpicBrawlersUML.drawio-1261124.png)
+
+
+
+
 
 ### Object-Oriented Design
 
-<span style="color: red">Explain your Object Oriented project design in a video. Embed the video on the page. If either partner has not yet demonstrated Middle Developer proficiency for LO1, that person should record their own video and submit it in [M6-3 Middle Developer Explanations (Record video)](https://sdccd.instructure.com/courses/2441328/discussion_topics/15036370). Only one video is required to be embedded in this page.</span>
+- Aggregation: The GameUI has-a Player and a Boss
+
+- Encapsulation: Each class manages its own state and behavior (damage, HP, gold).
+- Polymorphism: future versions include subclasses such as a SlimeBoss and DragonBoss to demonstrate inheritance
+- Event-Driven Programming: each click triggers ActionListener events, updating the GUI and progressing the game round-by-round
+
+#### Video Link: https://youtu.be/fAck9a8_tyI
+
+
 
 ### Learning Outcomes
 
