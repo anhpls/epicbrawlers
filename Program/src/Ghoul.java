@@ -5,7 +5,7 @@ public class Ghoul extends BaseBoss
 		// call the base class with scaling values for hp, attack, and gold
 		super(stage, 150 + (stage * 25), // decent hp that grows per stage
 				12 + (stage * 3), // attack gets stronger slowly
-				25 + (stage * 10)); // gold reward increases too
+				25 + (stage * 70)); // gold reward increases too
 	}
 
 	@Override

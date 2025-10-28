@@ -28,7 +28,7 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 
 ### GUI Preview
 
-![image-20251022212033373](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/Epic Brawlers/Progress Updates/Week 1/assets/image-20251022212033373.png)
+![image-20251022212033373](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 1/assets/image-20251022212033373.png)
 
 
 
@@ -53,7 +53,7 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 
 
 
-![EpicBrawlersUML.drawio](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/Epic Brawlers/Progress Updates/Week 1/assets/EpicBrawlersUML.drawio-1261124.png)
+![EpicBrawlersUML.drawio](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 1/assets/EpicBrawlersUML.drawio-1261124.png)
 
 
 
@@ -134,19 +134,45 @@ Revise anything that is needed in the Week 1 section based on instructor feedbac
 
 *Deliverable 2 (here):* Update your Canvas Project page from Week 1. Please add to the page - do not delete any content from Week 1:
 
-<span style="color: red">·  Share a screenshot of the GUI. </span>
+![image-20251028032544228](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 2/assets/image-20251028032544228.png)
 
-<span style="color: red">·  Add a journal-like entry about your experience writing code this week to your Canvas project page: </span>
+ **Journal Entry**
 
-​	<span style="color: red">·   What design changes have you decided to make, and why did you make them? </span>
+This week, I focused on implementing the weapon classes and refining how damage scaling works across different weapon levels. Each weapon (Stick, Bow, Sword, and Magic Staff) now scales its damage using an exponential growth formula, which makes upgrades feel more impactful as the player progresses. I tweaked my original game design to make character progression more interesting. Instead of a straightforward “defeat boss → move to next stage” flow, I added the idea of upgrading weapons and revisiting older bosses** to grind for gold and build up strength through upgrades. This change adds more strategy to the gameplay and makes progression feel more rewarding.
 
-​	<span style="color: red">·   What challenges have you encountered? </span>
+**Design Changes**
 
-<span style="color: red">	·   What do you still need to do to complete the project?</span>
+The biggest design change this week was shifting the focus from a linear boss-fight system to a more upgrade-based loop. Players can now choose to replay stages to earn gold, purchase weapon upgrades, and boost their survivability before moving on to tougher bosses. This aligns better with idle and incremental RPG mechanics and gives players more freedom to decide how to progress.
 
-<span style="color: red">·  Update your timeline goals, if needed. </span>
+Additionally, I improved the internal class design by introducing BaseWeapon and BaseBoss as parent classes. This structure uses inheritance and polymorphism to make it easier to define unique behavior for each subclass while sharing core logic like health, attack, and scaling.
 
- 
+**Challenges Encountered**
+
+Balancing the damage output between the player and bosses was one of the main challenges. Early versions of the scaling system made weapons either too weak or too overpowered at certain levels. I also had to carefully adjust each boss’s special attack logic to make sure battles stayed fair but challenging. (Still a work in progress). Another issue was managing the interaction between the player’s stats and boss behavior in a way that kept the gameplay loop consistent.
+
+**What's Next**
+
+Next week, I plan to:
+
+- Improve the **GUI** for the battle screen.
+- Display **health bars, gold, potions, and weapons** visually for better clarity.
+- Add early versions of the **shop system** so players can spend gold on upgrades.
+- Begin connecting player and boss logic through an early controller class.
+
+**Updated Timeline**
+
+| Week | Goals                                                        |
+| ---- | ------------------------------------------------------------ |
+| 1    | Write proposal; design CRC cards and UML; set up project files. |
+| 2    | Implement Player and Boss classes; test damage logic and gold system. |
+| 3    | Finalize model logic; improve GUI layout; possibly add intro screens to give backstory to the game; implement rough codes for all other functionalities (mainly the shop + save/load progress) |
+| 4    | (heavy focus on backend) Test and refine attack flow; heavy testing on gameplay logic + design and character progression |
+| 5    | (focus on frontend) test the GUI for bugs + improve GUI interactivity + include better visuals |
+| 6    | Connect event handling (controller) for attack and upgrade buttons. |
+| 7    | lots of time debugging + improving gameplay logic before final touches. |
+| 8    | Finalize all documentation and code; thorough testing        |
+
+
 
 ## Week 3: Updates
 
