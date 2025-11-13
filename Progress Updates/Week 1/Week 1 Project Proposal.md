@@ -99,16 +99,16 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 
 ### TO-DO Timeline Plan
 
-| Week | Goals                                                        |
-| ---- | ------------------------------------------------------------ |
-| 1    | Write proposal; design CRC cards and UML; set up project files. |
-| 2    | Implement Player and Boss classes; test damage logic and gold system. |
-| 3    | Finalize model logic; create beta GUI layout. Implement rough codes for all other classes |
-| 4    | Test and refine attack flow; prepare a simple non-functional GUI. |
-| 5    | Test the GUI (view) and display live HP updates.             |
-| 6    | Connect event handling (controller) for attack and upgrade buttons. |
-| 7    | Debug and polish stage progression and death/reset behavior. |
-| 8    | Finalize all documentation and code; thorough testing        |
+| Week                   | Goals                                                        |
+| ---------------------- | ------------------------------------------------------------ |
+| 1                      | Write proposal; design CRC cards and UML; set up project files. |
+| Oct 27 - Nov 2<br />2  | Implement Player and Boss classes; test damage logic and gold system. |
+| Nov 2 - Nov 9<br />3   | Finalize model logic; create beta GUI layout. Implement rough codes for all other classes |
+| Nov 10 - Nov 16<br />4 | Test and refine attack flow; prepare a simple non-functional GUI. |
+| Nov 17 - Nov 23<br />5 | Test the GUI (view) and display live HP updates.             |
+| Nov 24 - Nov 30<br />6 | Connect event handling (controller) for attack and upgrade buttons. |
+| Dec 1 - Dec 7<br />7   | Debug and polish stage progression and death/reset behavior. |
+| Dec 8 - Dec 14<br />8  | Finalize all documentation and code; thorough testing        |
 
 
 

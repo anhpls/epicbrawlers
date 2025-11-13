@@ -8,7 +8,6 @@ public abstract class BaseBoss
 
 	// track attack count for specialAttack every 3rd hit
 	private int attackCount = 0;
-	private boolean lastAttackWasSpecial = false;
 
 	// constructor: main stats
 	public BaseBoss(int stage, int maxHP, int baseAttack, int rewardGold)
@@ -22,11 +21,6 @@ public abstract class BaseBoss
 	}
 
 	// === getters ===
-	public boolean wasSpecialAttack()
-	{
-		return lastAttackWasSpecial;
-	}
-
 	public int getStage()
 	{
 		return stage; // retrieve stage number
@@ -74,11 +68,8 @@ public abstract class BaseBoss
 	{
 		attackCount++; // count how many times the boss has attacked
 		// every 3rd triggers a specialAtt
-		lastAttackWasSpecial = false; // reset flag
-
 		if (attackCount % 3 == 0)
 		{
-			lastAttackWasSpecial = true;
 			return specialAttack(); // use sbuclass's special move
 		}
 		return baseAttack; // otherwise normal hit
