@@ -2,10 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.text.NumberFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,6 +35,9 @@ public class BetaUI extends JFrame
 
 	// number formatter for gold
 	private static final NumberFormat NF = NumberFormat.getIntegerInstance();
+
+	// list of bosses that user has defeated
+	private Set<String> defeatedBosses = new HashSet<>();
 
 	// constructor builds the window
 	public BetaUI()
@@ -99,9 +103,14 @@ public class BetaUI extends JFrame
 	public void nextStage()
 	{
 		stage++; // go up one stage
+		player.autoStageHPBump();
 		player.healToFull(); // heal player to full before new boss
 		boss = createBossForStage(stage); // create new boss for that stage
 		battlePanel.setBoss(boss); // tell battle panel to update its boss
+
+		// make sure this is a normal fight, not a rebattle
+		battlePanel.setRebattleMode(false);
+
 		refreshAll(); // update ui
 		controlPanel.disableNextStage(); // lock next stage until new win
 		log("Entering Stage " + stage); // add to log
@@ -109,10 +118,7 @@ public class BetaUI extends JFrame
 
 	public void openShop()
 	{
-		// popup message for shop placeholder
-		JOptionPane.showMessageDialog(this,
-				"Shop coming soon.\nFor now, defeat bosses and collect gold.",
-				"Shop", JOptionPane.INFORMATION_MESSAGE);
+		new Shop(this, player).setVisible(true);
 	}
 
 	// === helper / utility methods ===
@@ -121,6 +127,18 @@ public class BetaUI extends JFrame
 		lblStage.setText("Stage " + stage); // update top label
 		battlePanel.refreshBars(); // update hp bars
 		battlePanel.refreshStats(); // update stats labels
+		controlPanel.setPotionButtonEnabled(player.getPotionCount() > 0);
+
+	}
+
+	public String[] getDefeatedBossArray()
+	{
+		return defeatedBosses.toArray(new String[0]);
+	}
+
+	public void markBossDefeated(String name)
+	{
+		defeatedBosses.add(name);
 	}
 
 	// unlock next stage button (called from battle panel)
@@ -163,6 +181,8 @@ public class BetaUI extends JFrame
 		log(" • Bosses become more difficult as game progresses.");
 		log(" • Defeat the boss to earn gold for upgrading weapons and stats.");
 		log(" • Click next stage to continue.");
+		log(" • Tip: Rebattling bosses allows you to earn gold for shop upgrades.");
+		log("This is essential for being able to fight later bosses.");
 		log(" • Enjoy!");
 		log("---------------------------------------------");
 	}
@@ -185,19 +205,37 @@ public class BetaUI extends JFrame
 		}
 	}
 
+	private int getBaseStageForBoss(String name)
+	{
+		return switch (name)
+		{
+			case "BattleBee" -> 1;
+			case "Ghoul" -> 2;
+			case "Mushroom" -> 3;
+			case "Slime" -> 4;
+			default -> 1;
+		};
+	}
+
+	// handles rebattling
 	public void replayBoss(String bossName)
 	{
+		int baseStage = getBaseStageForBoss(bossName);
+
 		BaseBoss rebattleBoss = switch (bossName)
 		{
-			case "BattleBee" -> new BattleBee(stage); // same scaling
-			case "Ghoul" -> new Ghoul(stage);
-			case "Mushroom" -> new Mushroom(stage);
-			case "Slime" -> new Slime(stage);
-			default -> new BattleBee(stage); // fallback
+			case "BattleBee" -> new BattleBee(baseStage);
+			case "Ghoul" -> new Ghoul(baseStage);
+			case "Mushroom" -> new Mushroom(baseStage);
+			case "Slime" -> new Slime(baseStage);
+			default -> new BattleBee(baseStage);
 		};
 
 		boss = rebattleBoss;
 		battlePanel.setBoss(boss);
+
+		battlePanel.setRebattleMode(true);
+
 		refreshAll();
 		log("---------------------------------------------");
 		log("Re-battling " + bossName + " for more gold!");

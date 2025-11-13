@@ -33,6 +33,12 @@ public abstract class BaseWeapon
 		return baseDamage; // return base damage
 	}
 
+	// returns cost to upgrade this weapon at its current level
+	public int getUpgradeCost()
+	{
+		return 20 * level;
+	}
+
 	public double getGrowth()
 	{
 		return growth; // return growth multiplier

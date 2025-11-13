@@ -15,7 +15,7 @@ public class ControlPanel extends JPanel
 	// constructor builds the row of buttons
 	public ControlPanel(BetaUI ui)
 	{
-		// simple flow layout to line up buttons in the center
+		// flow layout to line up buttons in the center
 		setLayout(new FlowLayout(FlowLayout.CENTER, 12, 10));
 
 		// create each button
@@ -23,7 +23,7 @@ public class ControlPanel extends JPanel
 		btnPotion = new JButton("Use Potion");
 		btnNext = new JButton("Next Stage");
 		JButton btnShop = new JButton("Open Shop");
-		JButton btnRebattle = new JButton("Re-Battle Boss"); // 👈 added here
+		JButton btnRebattle = new JButton("Re-Battle Boss");
 
 		// add them all to the panel
 		add(btnAttack);
@@ -38,12 +38,25 @@ public class ControlPanel extends JPanel
 		btnNext.addActionListener(e -> ui.nextStage());
 		btnShop.addActionListener(e -> ui.openShop());
 		btnRebattle.addActionListener(e -> {
-			String[] bosses = { "BattleBee", "Mushroom", "Ghoul", "Slime" };
+			// ask UI for list of defeated bosses
+			String[] defeated = ui.getDefeatedBossArray();
+
+			if (defeated.length == 0)
+			{
+				JOptionPane.showMessageDialog(ui,
+						"You haven't defeated any bosses yet!", "Re-Battle",
+						JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+
 			String chosen = (String) JOptionPane.showInputDialog(ui,
 					"Choose a boss to re-battle:", "Re-Battle",
-					JOptionPane.PLAIN_MESSAGE, null, bosses, bosses[0]);
+					JOptionPane.PLAIN_MESSAGE, null, defeated, defeated[0]);
 
-			if (chosen != null) ui.replayBoss(chosen);
+			if (chosen != null)
+			{
+				ui.replayBoss(chosen);
+			}
 		});
 
 		// next stage starts off locked until boss is defeated

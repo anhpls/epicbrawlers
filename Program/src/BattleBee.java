@@ -7,7 +7,7 @@ public class BattleBee extends BaseBoss
 		super(stage, // remember what stage this bee is from
 				100 + (stage * 15), // modest hp that grows slowly each stage
 				3 + stage, // very low base attack (barely hurts)
-				10 + (stage * 20) // small gold reward so early game feels light
+				20 + (stage * 30) // small gold reward so early game feels light
 		);
 	}
 

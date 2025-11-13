@@ -25,6 +25,9 @@ public class BattlePanel extends JPanel
 	private BaseBoss boss; // current boss
 	private BetaUI ui; // main ui
 
+	// rebattle boss mode toggle
+	private boolean rebattleMode = false;
+
 	// health bars
 	private JProgressBar pbPlayerHP = new JProgressBar(0, 100);
 	private JProgressBar pbBossHP = new JProgressBar(0, 100);
@@ -148,6 +151,16 @@ public class BattlePanel extends JPanel
 	// popup for when player wins a battle
 	private void showVictoryPopup(int goldEarned)
 	{
+
+		ui.markBossDefeated(boss.getClass().getSimpleName());
+
+		if (rebattleMode)
+		{
+			ui.log("Re-battle victory! Earned " + goldEarned + " gold.");
+			rebattleMode = false;
+			return;
+		}
+
 		String msg = "Victory!\n\nYou defeated the "
 				+ boss.getClass().getSimpleName() + ".\nReward: " + goldEarned
 				+ " Gold";
@@ -162,6 +175,11 @@ public class BattlePanel extends JPanel
 			ui.nextStage(); // move to next stage
 		}
 		// if player stays, they can click next stage manually
+	}
+
+	public void setRebattleMode(boolean rebattleMode)
+	{
+		this.rebattleMode = rebattleMode;
 	}
 
 	// shows popup when player loses
@@ -209,13 +227,28 @@ public class BattlePanel extends JPanel
 		// check if boss is dead
 		if (!boss.isAlive())
 		{
-			int gold = boss.getRewardGold(); // gold reward
-			player.addGold(gold); // add gold
-			ui.log("Boss defeated! +" + NF.format(gold) + " G"); // log
-			ui.enableNextStage(); // unlock next button
-			refreshStats(); // update stats
-			showVictoryPopup(gold); // show win popup
-			return; // done
+			int gold = boss.getRewardGold();
+			player.addGold(gold);
+			ui.log("Boss defeated! +" + NF.format(gold) + " G");
+			ui.markBossDefeated(boss.getClass().getSimpleName());
+			refreshStats();
+
+			if (!rebattleMode)
+			{
+				// normal boss fight
+				ui.enableNextStage();
+				showVictoryPopup(gold);
+			}
+			else
+			{
+				// rebattle fight — no popup, but allow normal gold + allow
+				// progressing normally
+				ui.log("Re-battle complete! You earned extra gold.");
+				ui.enableNextStage();
+				rebattleMode = false; // reset mode
+			}
+
+			return;
 		}
 
 		// boss attacks back
@@ -258,6 +291,7 @@ public class BattlePanel extends JPanel
 		{
 			ui.log("Potion used! ❤️ restored health."); // log heal
 			refreshBars(); // update hp bar
+			ui.refreshAll();
 		}
 		else
 		{

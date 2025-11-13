@@ -28,7 +28,7 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 
 ### GUI Preview
 
-![image-20251022212033373](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/Epic Brawlers/Progress Updates/Week 1/assets/image-20251022212033373.png)
+![image-20251022212033373](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 1/assets/image-20251022212033373.png)
 
 
 
@@ -53,7 +53,7 @@ When the player clicks Attack, the player deals damage to the boss, and immediat
 
 
 
-![EpicBrawlersUML.drawio](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/Epic Brawlers/Progress Updates/Week 1/assets/EpicBrawlersUML.drawio-1261124.png)
+![EpicBrawlersUML.drawio](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 1/assets/EpicBrawlersUML.drawio-1261124.png)
 
 
 
@@ -134,19 +134,45 @@ Revise anything that is needed in the Week 1 section based on instructor feedbac
 
 *Deliverable 2 (here):* Update your Canvas Project page from Week 1. Please add to the page - do not delete any content from Week 1:
 
-<span style="color: red">·  Share a screenshot of the GUI. </span>
+![image-20251028032544228](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 2/assets/image-20251028032544228.png)
 
-<span style="color: red">·  Add a journal-like entry about your experience writing code this week to your Canvas project page: </span>
+ **Journal Entry**
 
-​	<span style="color: red">·   What design changes have you decided to make, and why did you make them? </span>
+This week, I focused on implementing the weapon classes and refining how damage scaling works across different weapon levels. Each weapon (Stick, Bow, Sword, and Magic Staff) now scales its damage using an exponential growth formula, which makes upgrades feel more impactful as the player progresses. I tweaked my original game design to make character progression more interesting. Instead of a straightforward “defeat boss → move to next stage” flow, I added the idea of upgrading weapons and revisiting older bosses** to grind for gold and build up strength through upgrades. This change adds more strategy to the gameplay and makes progression feel more rewarding.
 
-​	<span style="color: red">·   What challenges have you encountered? </span>
+**Design Changes**
 
-<span style="color: red">	·   What do you still need to do to complete the project?</span>
+The biggest design change this week was shifting the focus from a linear boss-fight system to a more upgrade-based loop. Players can now choose to replay stages to earn gold, purchase weapon upgrades, and boost their survivability before moving on to tougher bosses. This aligns better with idle and incremental RPG mechanics and gives players more freedom to decide how to progress.
 
-<span style="color: red">·  Update your timeline goals, if needed. </span>
+Additionally, I improved the internal class design by introducing BaseWeapon and BaseBoss as parent classes. This structure uses inheritance and polymorphism to make it easier to define unique behavior for each subclass while sharing core logic like health, attack, and scaling.
 
- 
+**Challenges Encountered**
+
+Balancing the damage output between the player and bosses was one of the main challenges. Early versions of the scaling system made weapons either too weak or too overpowered at certain levels. I also had to carefully adjust each boss’s special attack logic to make sure battles stayed fair but challenging. (Still a work in progress). Another issue was managing the interaction between the player’s stats and boss behavior in a way that kept the gameplay loop consistent.
+
+**What's Next**
+
+Next week, I plan to:
+
+- Improve the **GUI** for the battle screen.
+- Display **health bars, gold, potions, and weapons** visually for better clarity.
+- Add early versions of the **shop system** so players can spend gold on upgrades.
+- Begin connecting player and boss logic through an early controller class.
+
+**Updated Timeline**
+
+| Week | Goals                                                        |
+| ---- | ------------------------------------------------------------ |
+| 1    | Write proposal; design CRC cards and UML; set up project files. |
+| 2    | Implement Player and Boss classes; test damage logic and gold system. |
+| 3    | Finalize model logic; improve GUI layout; possibly add intro screens to give backstory to the game; implement rough codes for all other functionalities (mainly the shop + save/load progress) |
+| 4    | (heavy focus on backend) Test and refine attack flow; heavy testing on gameplay logic + design and character progression |
+| 5    | (focus on frontend) test the GUI for bugs + improve GUI interactivity + include better visuals |
+| 6    | Connect event handling (controller) for attack and upgrade buttons. |
+| 7    | lots of time debugging + improving gameplay logic before final touches. |
+| 8    | Finalize all documentation and code; thorough testing        |
+
+
 
 ## Week 3: Updates
 
@@ -158,17 +184,62 @@ Work on your Week 3 goals from your project timeline.
 
 *Deliverable 2 (here):* Update your Canvas Project page from Week 1. Please add to the page - do not delete any content from Week 1 or Week 2:
 
-<span style="color: red">·  Share a screenshot of the GUI. </span>
+<img src="/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 3/Screenshot 2025-11-10 at 8.11.18 PM.png" alt="Screenshot 2025-11-10 at 8.11.18 PM" style="zoom:50%;" />
 
-<span style="color: red">·  Add a journal-like entry about your experience writing code this week to your Canvas project page: </span>
+**Journal Entry**
 
-​	<span style="color: red">·   What design changes have you decided to make, and why did you make them? </span>
+This week, I focused heavily on refining the Beta UI and fixing a long list of small but important issues that appeared once the battle screen became more visually complex. I spent time adjusting spacing, font sizes, and panel layouts to make the interface cleaner and easier to understand. I also added player and boss images, which required fixing scaling issues so the sprites would display correctly without stretching or overflowing their panels
 
-​	<span style="color: red">·   What challenges have you encountered? </span>
+Several interactive components needed logic fixes as well. For example, the “Use Potion” button now correctly disables itself when the player has no potions, and the “Next Stage” button only becomes enabled once the current boss is defeated. I also resolved problems with the health bars, which were initially not showing 0 HP correctly, or were displaying incorrect values after taking damage.
 
-<span style="color: red">	·   What do you still need to do to complete the project?</span>
+Week 3 was less about adding new gameplay mechanics and more about improving visual clarity and refining how the UI responds to game state changes, which helps the game feel more polished and functional.
 
-<span style="color: red">·  Update your timeline goals, if needed. </span>
+**Design Changes Made**
+
+- I replaced text labels for the player and bosses with actual images, making the game screen look more like a real RPG.
+- I removed background panels and borders around the icons to create a cleaner, minimalist battle layout.
+- I restructured parts of the UI logic so that boss images, stage labels, and button states update immediately whenever the player progresses or restarts.
+- I added early support for a Re-Battle option where players can challenge previously defeated bosses to grind gold without advancing the stage.
+
+These changes were made to make the game feel visually clearer and more interactive, and to better support the gameplay loop centered around progression and upgrading.
+
+**Challenges Encountered**
+
+This week’s biggest challenges were UI-related:
+
+- Image scaling caused stretched or oversized boss icons until I implemented a scaling helper method.
+- The health bars didn’t update properly at first; some values didn’t display 0 HP or overflowed incorrectly.
+- Button logic needed careful handling so players couldn’t press actions at the wrong time (e.g., using potions when none were available).
+- Some layout panels overlapped or misaligned, so I spent time adjusting layout managers, padding, and component sizes.
+
+Debugging UI issues took more time than expected, but it helped solidify the underlying structure of the game.
+
+**What I Still Need to Do**
+
+To complete the project, I still need to:
+
+- Implement the Shop System so players can spend gold on weapon upgrades and stats.
+- Add Save/Load features or at least persistent player stats.
+- Build more polished intro screens or story panels.
+- Add more visual polish such as animations, effects, or sound (if time allows).
+- Begin balancing boss stats, rewards, and difficulty curves.
+
+
+
+**Updated Timeline**
+
+| Week | Goals                                                        |
+| ---- | ------------------------------------------------------------ |
+| 1    | Write proposal; design CRC cards and UML; set up project files. |
+| 2    | Implement Player and Boss classes; test damage logic and gold system. |
+| 3    | Finalize model logic; improve GUI layout; possibly add intro screens to give backstory to the game; implement rough codes for all other functionalities |
+| 4    | (heavy focus on GUI) Test and refine attack flow; heavy testing on GUI + include characters as well as enemies |
+| 5    | (focus on frontend) test the GUI for bugs + improve GUI interactivity + include better visuals |
+| 6    | Connect event handling (controller) for attack and upgrade buttons. |
+| 7    | lots of time debugging + improving gameplay logic before final touches. |
+| 8    | Finalize all documentation and code; thorough testing        |
+
+
 
 ## Week 4: Updates
 
