@@ -24,6 +24,8 @@ public class ControlPanel extends JPanel
 		btnNext = new JButton("Next Stage");
 		JButton btnShop = new JButton("Open Shop");
 		JButton btnRebattle = new JButton("Re-Battle Boss");
+		JButton btnSave = new JButton("Save Game");
+		JButton btnLoad = new JButton("Load Game");
 
 		// add them all to the panel
 		add(btnAttack);
@@ -31,12 +33,16 @@ public class ControlPanel extends JPanel
 		add(btnNext);
 		add(btnShop);
 		add(btnRebattle);
+		add(btnSave);
+		add(btnLoad);
 
 		// connect each button to main UI actions
 		btnAttack.addActionListener(e -> ui.attackBoss());
 		btnPotion.addActionListener(e -> ui.usePotion());
 		btnNext.addActionListener(e -> ui.nextStage());
 		btnShop.addActionListener(e -> ui.openShop());
+		btnSave.addActionListener(e -> ui.showSaveMenu());
+		btnLoad.addActionListener(e -> ui.showLoadMenu());
 		btnRebattle.addActionListener(e -> {
 			// ask UI for list of defeated bosses
 			String[] defeated = ui.getDefeatedBossArray();
@@ -64,6 +70,7 @@ public class ControlPanel extends JPanel
 
 		// potion button starts disabled (player has none yet)
 		btnPotion.setEnabled(false);
+
 	}
 
 	// enable the next stage button after winning

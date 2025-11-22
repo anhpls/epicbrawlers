@@ -144,4 +144,29 @@ public class Player
 		}
 	}
 
+	// === save/load ===
+	// directly set current HP (used when loading a save file)
+	public void setHP(int hp)
+	{
+		this.hp = Math.max(0, Math.min(hp, maxHP));
+	}
+
+	// directly set max HP (used when loading a save file)
+	public void setMaxHPDirect(int newMax)
+	{
+		this.maxHP = newMax;
+		this.hp = Math.min(hp, maxHP);
+	}
+
+	// set potion count (used for loading)
+	public void setPotionCount(int count)
+	{
+		this.potionCount = Math.max(0, count);
+	}
+
+	// set gold (used for loading)
+	public void setGold(int amount)
+	{
+		this.gold = Math.max(0, amount);
+	}
 }

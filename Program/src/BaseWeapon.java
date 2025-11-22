@@ -50,6 +50,12 @@ public abstract class BaseWeapon
 		level++; // just adds +1 to current level
 	}
 
+	// set weapon level (used when loading save files)
+	public void setLevel(int lvl)
+	{
+		if (lvl > 0) this.level = lvl;
+	}
+
 	// main damage formula (will overridden by subclasses)
 	public int getDamage()
 	{
