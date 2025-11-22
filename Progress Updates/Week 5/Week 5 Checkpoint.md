@@ -317,7 +317,8 @@ You hit the boss for 52734784 💥
 Boss defeated! +3,455 G
 ```
 
-Full Error Log:
+**Full Error Log:**
+
 ```
 You hit the boss for 842891838 💥
 Boss defeated! +3,035 G
@@ -582,7 +583,7 @@ This was the largest technical issue this week.
 - Display last played timestamp for each save slot  
 - Reorder the button options in popup menus (Save/Load Menus)
 
-
+---
 
 ### Updated Timeline
 
@@ -596,10 +597,6 @@ This was the largest technical issue this week.
 | 6    | Fix weapon/boss overflow and scaling issues, debug the Next Stage button logic, polish UI number formatting, rebalance max HP upgrades, and refine the save system (autosave, overwrite confirmation, better slot labels). |
 | 7    | lots of time debugging + improving gameplay logic before final touches. |
 | 8    | Finalize all documentation and code; thorough testing        |
-
-
-
-
 
 
 
