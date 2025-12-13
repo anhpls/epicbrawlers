@@ -808,8 +808,6 @@ https://github.com/anhpls/epicbrawlers
 
 ## Week 7: Updates
 
-Work on your Week 4 goals from your project timeline.
-
 ### Week 7 Deliverables
 
 ![Screenshot 2025-12-12 at 11.15.39 PM](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 7/assets/Screenshot 2025-12-12 at 11.15.39 PM-5610529.png)
@@ -834,7 +832,52 @@ Overall, this week pushed the project towards a more strategic RPG experience wh
 
 ### Design Changes Made This Week
 
+- Introduced the Dragon Slayer Potion as a late-game mechanic to counter Dragon armor.
+- Added UI stat displays for:
+  - Dragon Slayer Potion count
+  - Remaining Dragon Slayer hits
+- Implemented tooltip hover text in the shop to explain what each upgrade does.
+- Adjusted scaling and costs to better support late-game progression.
+- Adjusted health and damage scaling after fixing a bug that caused instant player death at Stage 44, ensuring late-game encounters remain challenging but fair.
 
+---
+
+### Challenges Encountered This Week
+
+- Debugging an issue where the player would instantly die upon entering Stage 44, which required tracing through damage calculations and identifying overflow and scaling problems at higher stages.
+- Refactoring HP values from int to long caused save/load constructor mismatches and runtime errors that required updating multiple classes to stay consistent.
+- Separating potion purchase logic from activation logic introduced state synchronization issues between the Player class, BattlePanel, Shop, and ControlPanel.
+- Debugging edge cases where Dragon Slayer hits were not decrementing correctly unless the Dragon boss was active.
+- Ensuring UI elements stayed synchronized after purchases, stage changes, and rebattles required careful refresh ordering.
+
+----
+
+### What I Still Need To Do
+
+- Continue balancing late-game scaling now that high-stage bugs have been fixed.
+- Improve visual polish of the shop and battle UI.
+- Add clearer visual feedback when special mechanics (such as armor breaking) activate.
+- Finalize testing of save/load functionality across multiple stages and upgrades.
+- Thorough testing
+
+---
+
+### Updated Timeline
+
+| **Week** | **Goals**                                                    |
+| -------- | ------------------------------------------------------------ |
+| 1        | Write proposal; design CRC + UML; set up project files       |
+| 2        | Implement Player and Boss classes; test attack, damage, and gold logic |
+| 3        | Add GUI elements; implement rebattling system; introduce basic shop framework |
+| 4        | Improve GUI layout; finalize battle flow; conduct early playtesting |
+| 5        | Build Save/Load system; identify late-game issues and scaling problems |
+| 6        | Fix overflow issues, update UI formatting, rebalance HP upgrades, repair stage progression, stabilize save/load |
+| 7        | UI polish, balance tuning for late-game bosses, additional testing and bug fixes |
+| 8        | Final documentation, final testing pass, and code submission |
+
+### GitHub Repository
+
+https://github.com/anhpls/epicbrawlers
 
 
 
