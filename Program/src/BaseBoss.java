@@ -70,18 +70,17 @@ public abstract class BaseBoss
 	}
 
 	// === attacks ===
-	public int dealDamage()
+	public long dealDamage()
 	{
 		attackCount++; // count how many times the boss has attacked
-		// every 3rd triggers a specialAtt
 		lastAttackWasSpecial = false; // reset flag
 
 		if (attackCount % 3 == 0)
 		{
 			lastAttackWasSpecial = true;
-			return specialAttack(); // use sbuclass's special move
+			return specialAttack(); // subclass special move
 		}
-		return baseAttack; // otherwise normal hit
+		return baseAttack; // normal hit
 	}
 
 	// === subclass helpers ===
@@ -100,8 +99,8 @@ public abstract class BaseBoss
 	}
 
 	// === special (implemented by subclasses) ===
-	protected abstract int specialAttack(); // each boss has its own 3rd-attack
-											// special move
+	protected abstract long specialAttack(); // each boss has its own 3rd-attack
+												// special move
 
 	@Override
 	public String toString()

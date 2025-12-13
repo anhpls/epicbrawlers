@@ -111,6 +111,11 @@ public class BetaUI extends JFrame
 		battlePanel.handlePotion(); // try to use a potion
 	}
 
+	public void useDragonPotion()
+	{
+		battlePanel.handleDragonPotion(); // dragon potion usage
+	}
+
 	public void nextStage()
 	{
 		stage++; // go up one stage
@@ -139,6 +144,8 @@ public class BetaUI extends JFrame
 		battlePanel.refreshBars(); // update hp bars
 		battlePanel.refreshStats(); // update stats labels
 		controlPanel.setPotionButtonEnabled(player.getPotionCount() > 0);
+		controlPanel.setDragonPotionButtonEnabled(
+				player.getDragonPotionCount() > 0);
 
 	}
 
@@ -242,6 +249,7 @@ public class BetaUI extends JFrame
 			case "Ghoul" -> new Ghoul(baseStage);
 			case "Mushroom" -> new Mushroom(baseStage);
 			case "Slime" -> new Slime(baseStage);
+			case "Dragon" -> new Dragon(baseStage);
 			default -> new BattleBee(baseStage); // default fallback again
 		};
 
@@ -265,7 +273,8 @@ public class BetaUI extends JFrame
 			SaveData data = new SaveData(stage, player.getGold(),
 					player.getPotionCount(), player.getWeapon().getName(),
 					player.getWeapon().getLevel(), player.getMaxHP(),
-					player.getHP(), player.getHpUpgradeCount(), defeatedBosses);
+					player.getHP(), player.getHpUpgradeCount(),
+					player.getDragonPotionHits(), defeatedBosses);
 
 			// save file called "save.dat"
 			ObjectOutputStream out = new ObjectOutputStream(
@@ -299,6 +308,7 @@ public class BetaUI extends JFrame
 			player.setPotionCount(data.potions); // restore potions
 			player.setMaxHPDirect(data.maxHP); // set max hp
 			player.setHP(data.currentHP); // restore current hp
+			player.setDragonPotionHits(data.dragonPotionHits); //
 			player.setHpUpgradeCount(data.hpUpgradeCount); // amt of maxHP
 															// upgrades
 
@@ -347,7 +357,8 @@ public class BetaUI extends JFrame
 			SaveData data = new SaveData(stage, player.getGold(),
 					player.getPotionCount(), player.getWeapon().getName(),
 					player.getWeapon().getLevel(), player.getMaxHP(),
-					player.getHP(), player.getHpUpgradeCount(), defeatedBosses);
+					player.getHP(), player.getHpUpgradeCount(),
+					player.getDragonPotionHits(), defeatedBosses);
 
 			// dynamic filename depending on slot chosen
 			ObjectOutputStream out = new ObjectOutputStream(

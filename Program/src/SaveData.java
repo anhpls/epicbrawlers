@@ -21,21 +21,24 @@ public class SaveData implements Serializable
 	public int weaponLevel;
 
 	// player's max hp at the moment
-	public int maxHP;
+	public long maxHP;
 
 	// player's current hp at the moment
-	public int currentHP;
+	public long currentHP;
 
 	// how many maxHP upgrades user has done
 	public int hpUpgradeCount;
+
+	// how many dragon slayer potions
+	public int dragonPotionHits;
 
 	// records bosses that user has already defeated
 	public Set<String> defeatedBosses = new HashSet<>();
 
 	// constructor builds the savedata object with all needed values
 	public SaveData(int stage, int gold, int potions, String weaponName,
-			int weaponLevel, int maxHP, int currentHP, int hpUpgradeCount,
-			Set<String> defeatedBosses)
+			int weaponLevel, long maxHP, long currentHP, int hpUpgradeCount,
+			int dragonPotionHits, Set<String> defeatedBosses)
 	{
 		this.stage = stage; // save current stage
 		this.gold = gold; // save current gold
@@ -45,6 +48,7 @@ public class SaveData implements Serializable
 		this.maxHP = maxHP; // save max hp
 		this.currentHP = currentHP; // save current hp
 		this.hpUpgradeCount = hpUpgradeCount;
+		this.dragonPotionHits = dragonPotionHits;
 		this.defeatedBosses = new HashSet<>(defeatedBosses); // saves list of
 																// bosses that
 																// user has

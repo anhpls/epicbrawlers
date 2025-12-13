@@ -11,6 +11,7 @@ public class ControlPanel extends JPanel
 	// buttons that need to be accessed later
 	private final JButton btnNext;
 	private final JButton btnPotion;
+	private final JButton btnDragonPotion; // dragon slayer potion button
 
 	// constructor builds the row of buttons
 	public ControlPanel(BetaUI ui)
@@ -21,6 +22,7 @@ public class ControlPanel extends JPanel
 		// create each button
 		JButton btnAttack = new JButton("Attack");
 		btnPotion = new JButton("Use Potion");
+		btnDragonPotion = new JButton("Use Dragon Slayer Potion");
 		btnNext = new JButton("Next Stage");
 		JButton btnShop = new JButton("Open Shop");
 		JButton btnRebattle = new JButton("Re-Battle Boss");
@@ -30,6 +32,7 @@ public class ControlPanel extends JPanel
 		// add them all to the panel
 		add(btnAttack);
 		add(btnPotion);
+		add(btnDragonPotion);
 		add(btnNext);
 		add(btnShop);
 		add(btnRebattle);
@@ -39,6 +42,7 @@ public class ControlPanel extends JPanel
 		// connect each button to main UI actions
 		btnAttack.addActionListener(e -> ui.attackBoss());
 		btnPotion.addActionListener(e -> ui.usePotion());
+		btnDragonPotion.addActionListener(e -> ui.useDragonPotion());
 		btnNext.addActionListener(e -> ui.nextStage());
 		btnShop.addActionListener(e -> ui.openShop());
 		btnSave.addActionListener(e -> ui.showSaveMenu());
@@ -71,6 +75,8 @@ public class ControlPanel extends JPanel
 		// potion button starts disabled (player has none yet)
 		btnPotion.setEnabled(false);
 
+		btnDragonPotion.setEnabled(false); // no dragon potions at start
+
 	}
 
 	// enable the next stage button after winning
@@ -89,5 +95,11 @@ public class ControlPanel extends JPanel
 	public void setPotionButtonEnabled(boolean enabled)
 	{
 		btnPotion.setEnabled(enabled);
+	}
+
+	// used by the ui to toggle dragon potion button based on count
+	public void setDragonPotionButtonEnabled(boolean enabled)
+	{
+		btnDragonPotion.setEnabled(enabled);
 	}
 }

@@ -13,7 +13,7 @@ public class BattleBee extends BaseBoss
 	}
 
 	@Override
-	protected int specialAttack()
+	protected long specialAttack()
 	{
 		// "sting jab" — a small spike every 3rd hit
 		int dmg = (int) Math.round(getBaseAttack() * 1.5); // 1.5x damage, still

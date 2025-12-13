@@ -21,9 +21,15 @@ public class Dragon extends BaseBoss
 				200 * stage); // gives a large gold reward when defeated
 	}
 
-	@Override
-	public void takeDamage(int dmg)
+	public void takeDamage(int dmg, Player player)
 	{
+		// if dragon potion is active, ignore armor
+		if (player.consumeDragonPotionHit())
+		{
+			super.takeDamage(dmg); // full damage, no reduction
+			return;
+		}
+
 		// apply passive dmg reduction before calling base class method
 		int reduced = (int) Math.round(dmg * DAMAGE_TAKEN); // cut dmg to 80%
 		super.takeDamage(reduced); // actually subtract hp
@@ -31,8 +37,8 @@ public class Dragon extends BaseBoss
 
 	@Override
 	// inferno breath — massive fire blast that hits 3x harder
-	protected int specialAttack()
+	protected long specialAttack()
 	{
-		return (int) Math.round(getBaseAttack() * 3.0);
+		return Math.round(getBaseAttack() * 3.0);
 	}
 }

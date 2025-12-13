@@ -46,6 +46,10 @@ public class BattlePanel extends JPanel
 	private JLabel lblBossTitle = new JLabel();
 	private JLabel lblBossSpecial = new JLabel();
 
+	// dragon slayer potion UI
+	private JLabel lblDragonPotion = new JLabel(); // shows dragon slayer hits
+	private JLabel lblDragonPotionCount = new JLabel(); // shows potion count
+
 	// number formatter for gold
 	private static final NumberFormat NF = NumberFormat.getIntegerInstance();
 
@@ -132,10 +136,15 @@ public class BattlePanel extends JPanel
 	{
 		JPanel stats = new JPanel(); // panel for stats
 		stats.setLayout(new BoxLayout(stats, BoxLayout.Y_AXIS)); // vertical
+																	// stack
+
 		stats.add(lblWeapon); // weapon info
-		stats.add(lblPotions); // potion count
-		stats.add(lblGold); // gold
-		return stats; // return panel
+		stats.add(lblPotions); // health potion count
+		stats.add(lblDragonPotionCount); // dragon potion count
+		stats.add(lblDragonPotion); // dragon slayer hits
+		stats.add(lblGold); // gold display
+
+		return stats; // return finished panel
 	}
 
 	// vertical list of boss stats
@@ -219,7 +228,14 @@ public class BattlePanel extends JPanel
 
 		// player attacks boss
 		int dmg = player.attackDamage(); // get weapon damage
-		boss.takeDamage(dmg); // subtract from boss hp
+		if (boss instanceof Dragon)
+		{
+			((Dragon) boss).takeDamage(dmg, player);
+		}
+		else
+		{
+			boss.takeDamage(dmg);
+		} // subtract from boss hp
 
 		// if boss is dead then enable next stage button.
 		if (!boss.isAlive())
@@ -230,6 +246,7 @@ public class BattlePanel extends JPanel
 		flashHit("💥"); // show hit emoji
 		ui.log("You hit the boss for " + Utils.fmt(dmg) + " 💥"); // log message
 		refreshBars(); // update hp display
+		refreshStats();
 
 		// check if boss is dead
 		if (!boss.isAlive())
@@ -259,8 +276,8 @@ public class BattlePanel extends JPanel
 		}
 
 		// boss attacks back
-		int bd = boss.dealDamage(); // boss damage
-		player.takeDamage(bd); // player loses hp
+		long bd = boss.dealDamage(); // boss damage
+		player.takeDamage((int) Math.min(Integer.MAX_VALUE, bd));
 
 		// check if it was a special attack
 		if (boss.wasSpecialAttack())
@@ -308,6 +325,25 @@ public class BattlePanel extends JPanel
 		ui.log("Potion used! ❤️ Restored health.");
 		refreshBars();
 		ui.refreshAll();
+	}
+
+	// handles dragon slayer potion activation
+	public void handleDragonPotion()
+	{
+		if (!player.isAlive()) // can’t use while dead
+		{
+			ui.log("You can’t use potions while down."); // feedback
+			return;
+		}
+
+		if (!player.useDragonPotion()) // try to consume potion
+		{
+			ui.log("No Dragon Slayer potions left."); // failed
+			return;
+		}
+
+		ui.log("🔥 Used Dragon Slayer Potion! (+10 hits)"); // success log
+		refreshStats(); // update UI immediately
 	}
 
 	// shows quick emoji animation when hit happens
@@ -364,14 +400,30 @@ public class BattlePanel extends JPanel
 	// update stats labels
 	public void refreshStats()
 	{
+		// show current weapon name, level, and damage
 		lblWeapon.setText(" Weapon: " + player.getWeapon().getName() + " (Lv "
 				+ player.getWeapon().getLevel() + ") dmg "
-				+ Utils.fmt(player.getWeapon().getDamage())); // weapon info
-		lblPotions.setText(" Potions: x" + Utils.fmt(player.getPotionCount())); // potions
-		lblGold.setText(" Gold: " + Utils.fmt(player.getGold())); // gold
-		lblBossTitle.setText(" Boss: " + boss.getClass().getSimpleName()); // name
-		lblBossSpecial.setText(" Special: " + getBossSpecialText()); // special
-																		// move
+				+ Utils.fmt(player.getWeapon().getDamage()));
+
+		// show how many health potions the player has
+		lblPotions.setText(" Potions: x" + Utils.fmt(player.getPotionCount()));
+
+		// show how many dragon slayer potions are in inventory
+		lblDragonPotionCount.setText(
+				" Dragon Slayer Potions: x" + player.getDragonPotionCount());
+
+		// show how many armor-breaking hits are left
+		lblDragonPotion.setText(
+				" Dragon Slayer Hits: " + player.getDragonPotionHits());
+
+		// display current gold amount
+		lblGold.setText(" Gold: " + Utils.fmt(player.getGold()));
+
+		// show the current boss name
+		lblBossTitle.setText(" Boss: " + boss.getClass().getSimpleName());
+
+		// show the boss's special ability description
+		lblBossSpecial.setText(" Special: " + getBossSpecialText());
 	}
 
 	// resize images

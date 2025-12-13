@@ -2,13 +2,15 @@ public class Player
 {
 	// player stats
 	private int gold; // how much money player has
-	private int maxHP; // total hp player can have
-	private int hp; // current hp
+	private long maxHP; // total hp player can have
+	private long hp; // current hp
 
 	// consumables
 	private int potionCount; // how many health pots player owns
 	private static final double POTION_HEAL = 0.40; // heal 40% of max HP
 	private int hpUpgradeCount = 0;
+	private int dragonPotionHits = 0; // how many armor breaking hits left
+	private int dragonPotionCount = 0; // how many dragon slayer potions left
 
 	// current weapon
 	private BaseWeapon weapon;
@@ -29,12 +31,12 @@ public class Player
 		return gold; // return gold amount
 	}
 
-	public int getHP()
+	public long getHP()
 	{
 		return hp; // return current hp
 	}
 
-	public int getMaxHP()
+	public long getMaxHP()
 	{
 		return maxHP; // return max hp
 	}
@@ -52,6 +54,27 @@ public class Player
 	public BaseWeapon getWeapon()
 	{
 		return weapon; // return equipped weapon
+	}
+
+	public int getDragonPotionHits()
+	{
+		return dragonPotionHits; // how many armor-breaking hits are left
+	}
+
+	public int getDragonPotionCount()
+	{
+		return dragonPotionCount; // how many dragon slayer potions we have
+	}
+
+	public void addDragonPotions(int amount)
+	{
+		if (amount > 0) // only add if positive
+			dragonPotionCount += amount; // increase potion count
+	}
+
+	public void setDragonPotionCount(int count)
+	{
+		dragonPotionCount = Math.max(0, count); // clamp
 	}
 
 	// === gold handling ===
@@ -87,7 +110,7 @@ public class Player
 		// take damage but don't go below 0
 		if (dmg > 0)
 		{
-			hp = Math.max(0, hp - dmg);
+			hp = Math.max(0L, hp - dmg);
 		}
 	}
 
@@ -98,7 +121,7 @@ public class Player
 
 	// permanent max HP increase (via shop)
 	// gives a mini heal for same amount
-	public void increaseMaxHP(int increase)
+	public void increaseMaxHP(long increase)
 	{
 		if (increase <= 0) return;
 		maxHP += increase; // bump total hp
@@ -139,7 +162,7 @@ public class Player
 	// bosses scale faster so player still feels pressure to upgrade
 	public void autoStageHPBump()
 	{
-		int increase = Math.max(1, (int) Math.round(maxHP * 0.15)); // +15%
+		long increase = Math.max(1L, Math.round(maxHP * 0.15)); // +15%
 		increaseMaxHP(increase);
 	}
 
@@ -167,10 +190,37 @@ public class Player
 		if (hp >= maxHP) return false;
 
 		potionCount--; // use one
-		int heal = Math.max(1, (int) Math.round(maxHP * POTION_HEAL)); // heal
-																		// 40%
+		// heal 40%
+		long heal = Math.max(1L, Math.round(maxHP * POTION_HEAL));
+
 		hp = Math.min(maxHP, hp + heal); // don't go past max hp
 		return true;
+	}
+
+	public void setDragonPotionHits(int hits)
+	{
+		this.dragonPotionHits = Math.max(0, hits);
+	}
+
+	public boolean consumeDragonPotionHit()
+	{
+		if (dragonPotionHits > 0)
+		{
+			dragonPotionHits--;
+			return true;
+		}
+		return false;
+	}
+
+	// activate the dragon slayer potion
+	public boolean useDragonPotion()
+	{
+		if (dragonPotionCount <= 0) // no potions left
+			return false;
+
+		dragonPotionCount--; // consume one potion
+		dragonPotionHits += 10; // grant 10 armor-breaking hits
+		return true; // success
 	}
 
 	// === combat & equipment ===
@@ -195,13 +245,13 @@ public class Player
 
 	// === save/load ===
 	// directly set current HP (used when loading a save file)
-	public void setHP(int hp)
+	public void setHP(long hp)
 	{
 		this.hp = Math.max(0, Math.min(hp, maxHP));
 	}
 
 	// directly set max HP (used when loading a save file)
-	public void setMaxHPDirect(int newMax)
+	public void setMaxHPDirect(long newMax)
 	{
 		this.maxHP = newMax;
 		this.hp = Math.min(hp, maxHP);

@@ -14,11 +14,11 @@ public class Slime extends BaseBoss
 
 	@Override
 	// "triple slam" — hits 3x harder but damages itself
-	protected int specialAttack()
+	protected long specialAttack()
 	{
-		int dmg = getBaseAttack() * 3; // big triple slam hit
-		selfDamage((long) Math.round(getMaxHP() * 0.10)); // hurts itself by 10%
-															// of max hp
+		long dmg = (long) getBaseAttack() * 3; // big triple slam hit
+		selfDamage(Math.round(getMaxHP() * 0.10)); // hurts itself by 10%
+													// of max hp
 		return dmg; // send damage back
 	}
 }

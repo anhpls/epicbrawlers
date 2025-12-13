@@ -11,8 +11,8 @@ public class Mushroom extends BaseBoss
 
 	@Override
 	// "spore burst" — doubles attack every 3rd hit
-	protected int specialAttack()
+	protected long specialAttack()
 	{
-		return getBaseAttack() * 2; // simple but strong burst
+		return (long) getBaseAttack() * 2; // simple but strong burst
 	}
 }

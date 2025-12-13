@@ -21,9 +21,14 @@ public class Shop extends JDialog
 	private JButton btnUpgradeWeaponTier;
 	private JButton btnIncreaseHP;
 	private JButton btnClose;
+	private JButton btnDragonPotion;
 
 	// formatting gold
 	private static final NumberFormat NF = NumberFormat.getIntegerInstance();
+
+	// dragon slayer potion
+	private static final int DRAGON_POTION_COST = 30_000; // late-game dragon
+															// counter
 
 	public Shop(BetaUI ui, Player player)
 	{
@@ -45,21 +50,42 @@ public class Shop extends JDialog
 		btnLevelUpWeapon = new JButton();
 		btnUpgradeWeaponTier = new JButton();
 		btnIncreaseHP = new JButton();
+		btnDragonPotion = new JButton();
 		btnClose = new JButton("Close");
+
+		// tooltips
+		// explains health potion behavior
+		btnBuyPotion.setToolTipText(
+				"Restores 40% of your max HP when used in battle.");
+		// explains weapon level up
+		btnLevelUpWeapon.setToolTipText(
+				"Increases weapon damage. Cost scales with weapon level.");
+		// explains weapon tier upgrade
+		btnUpgradeWeaponTier.setToolTipText(
+				"Upgrades to a stronger weapon type with higher base damage.");
+		// explains max HP upgrade
+		btnIncreaseHP.setToolTipText(
+				"Permanently increases your max HP. Cost increases each time.");
+		// explains dragon slayer potion
+		btnDragonPotion.setToolTipText("Adds +10 armor-breaking hits.\n"
+				+ "Each hit ignores Dragon armor.\n"
+				+ "Only consumed when you click 'Use Dragon Slayer Potion'.");
 
 		// linking buttons to functions
 		btnBuyPotion.addActionListener(e -> buyPotion());
 		btnLevelUpWeapon.addActionListener(e -> levelUpWeapon());
 		btnUpgradeWeaponTier.addActionListener(e -> upgradeWeaponTier());
 		btnIncreaseHP.addActionListener(e -> upgradeMaxHP());
+		btnDragonPotion.addActionListener(e -> buyDragonPotion());
 		btnClose.addActionListener(e -> dispose()); // close shop
 
 		// putting buttons in a list
-		JPanel panel = new JPanel(new GridLayout(5, 1, 10, 10));
+		JPanel panel = new JPanel(new GridLayout(6, 1, 10, 10));
 		panel.add(btnBuyPotion);
 		panel.add(btnLevelUpWeapon);
 		panel.add(btnUpgradeWeaponTier);
 		panel.add(btnIncreaseHP);
+		panel.add(btnDragonPotion);
 		panel.add(btnClose);
 
 		// title and button panel to shop
@@ -120,6 +146,12 @@ public class Shop extends JDialog
 		btnIncreaseHP.setText("Increase Max HP (" + hpCost + "g)");
 		btnIncreaseHP.setIcon(loadIcon("images/shop/hp.png", 32));
 		btnIncreaseHP.setEnabled(player.getGold() >= hpCost);
+
+		// dragon slayer potion
+		btnDragonPotion.setText("Dragon Slayer Potion ("
+				+ NF.format(DRAGON_POTION_COST) + "g)");
+		btnDragonPotion.setIcon(loadIcon("images/shop/dragon_potion.png", 32));
+		btnDragonPotion.setEnabled(player.getGold() >= DRAGON_POTION_COST);
 	}
 
 	// speicific icon sizes
@@ -173,6 +205,25 @@ public class Shop extends JDialog
 
 		ui.refreshAll(); // refresh the gameplay ui
 		refreshShop(); // update prices / buttons in shop window
+	}
+
+	// buy dragon slayer potion (breaks dragon armor)
+	private void buyDragonPotion()
+	{
+		// check if player can afford it
+		if (!player.spendGold(DRAGON_POTION_COST))
+		{
+			ui.log("Not enough gold for Dragon Slayer Potion.");
+			return;
+		}
+		// add potion to inventory
+		player.addDragonPotions(1);
+		// log purchase
+		ui.log("🧪 Bought Dragon Slayer Potion (+1)");
+
+		// refresh UI + shop
+		ui.refreshAll();
+		refreshShop();
 	}
 
 	// level up current weapon

@@ -812,21 +812,31 @@ Work on your Week 4 goals from your project timeline.
 
 ### Week 7 Deliverables
 
-*Deliverable 1 (on the Canvas* [*Project submission*](https://sdccd.instructure.com/courses/2441328/assignments/19806962)*):* Submit the code you have written so far, even if it is not complete and/or has compiler errors. 
+![Screenshot 2025-12-12 at 11.15.39 PM](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 7/assets/Screenshot 2025-12-12 at 11.15.39 PM-5610529.png)
 
-*Deliverable 2 (here):* Update your Canvas Project page from Week 1. Please add to the page - do not delete any content from Weeks 1-6:
+![Screenshot 2025-12-12 at 11.20.51 PM](/Users/anhpls/Desktop/SWE/CISC 191 Intermediate Java/epicbrawlers/Progress Updates/Week 7/assets/Screenshot 2025-12-12 at 11.20.51 PM.png)
 
-<span style="color: red">·  Share a screenshot of the GUI. </span>
+### Journal Entry
 
-<span style="color: red">·  Add a journal-like entry about your experience writing code this week to your Canvas project page: </span>
+This week, I focused primarily on expanding the game’s progression system by designing and implementing a fully functional shop and upgrade flow. Instead of only progressing by defeating bosses, players can now strategically spend gold to improve their stats and prepare for tougher encounters.
 
-​	<span style="color: red">·   What design changes have you decided to make, and why did you make them? </span>
+A major part of this work involved introducing a new late-game item: the Dragon Slayer Potion. I made sure each shop item had proper cost scaling, validation (checking if the player has enough gold), and immediate UI feedback when a purchase succeeds or fails.
 
-​	<span style="color: red">·   What challenges have you encountered? </span>
+I also spent time separating inventory vs. activation logic for consumables. Dragon Slayer Potions are now stored in the player’s inventory and only take effect when explicitly used during battle. This required carefully updating the Player class, battle logic, and UI so potion counts, remaining hits, and button states all stay in sync.
 
-<span style="color: red">	·   What do you still need to do to complete the project?</span>
+Another focus this week was UI clarity and polish. I added stat displays for Dragon Slayer Potions and remaining armor-breaking hits, ensured buttons enable/disable correctly based on inventory, and added tooltip hover text in the shop to explain what each upgrade does. This helped reduce confusion and made the mechanics more intuitive for players.
 
-<span style="color: red">·  Update your timeline goals, if needed. </span>
+Finally, I fixed several bugs introduced by refactoring health values to use long instead of int, including save/load issues and incorrect constructor parameters. Debugging these issues reinforced the importance of keeping data models consistent across game logic, UI, and persistence.
+
+Overall, this week pushed the project towards a more strategic RPG experience where players must plan upgrades, manage resources, and prepare for scaling difficulty.
+
+---
+
+### Design Changes Made This Week
+
+
+
+
 
 ## Week 8: Project Wrap-up
 

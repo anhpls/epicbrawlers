@@ -10,12 +10,14 @@ public class Ghoul extends BaseBoss
 	}
 
 	@Override
-	protected int specialAttack()
+	protected long specialAttack()
 	{
 		// "drain life" — deals 1.5x dmg and heals a bit from it
-		int damage = (int) (getBaseAttack() * 1.5); // 50% stronger hit
-		int healAmount = (int) (damage * 0.2); // heals for 20% of that damage
-		heal(healAmount); // restore some hp
+		// 50% stronger hit
+		long damage = Math.round(getBaseAttack() * 1.5);
+		// heals for 20% of that damage
+		long healAmount = Math.round(damage * 0.2);
+		heal((int) healAmount); // restore some hp
 		return damage; // send back damage dealt
 	}
 }
