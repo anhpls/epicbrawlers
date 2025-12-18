@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,7 +17,11 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-// main game window that holds everything together
+/**
+ * main game window that coordinates gameplay, ui panels, and game state.
+ * acts as the central piece tying together player, bosses, battle panel,
+ * controls, logging, saving, and loading.
+ */
 public class BetaUI extends JFrame
 {
 	// keep track of what stage the player is on
@@ -44,7 +47,9 @@ public class BetaUI extends JFrame
 	// list of bosses that user has defeated
 	private Set<String> defeatedBosses = new HashSet<>();
 
-	// constructor builds the window
+	/**
+	 * constructs the main game window and initializes all ui components.
+	 */
 	public BetaUI()
 	{
 		// set the title of the window
@@ -94,28 +99,44 @@ public class BetaUI extends JFrame
 		setLocationRelativeTo(null); // center window on screen
 	}
 
-	// return stage #
+	/**
+	 * returns the current stage number.
+	 *
+	 * @return current stage
+	 */
 	public int getStage()
 	{
 		return stage;
 	}
 
 	// === methods called from control panel buttons ===
+	/**
+	 * triggers a player attack against the current boss.
+	 */
 	public void attackBoss()
 	{
 		battlePanel.handleAttack(); // run attack logic inside battle panel
 	}
-
+	
+	/**
+	 * attempts to use a health potion during battle.
+	 */
 	public void usePotion()
 	{
 		battlePanel.handlePotion(); // try to use a potion
 	}
 
+	/**
+	 * attempts to use a dragon slayer potion.
+	 */
 	public void useDragonPotion()
 	{
 		battlePanel.handleDragonPotion(); // dragon potion usage
 	}
 
+	/**
+	 * advances the game to the next stage and spawns a new boss.
+	 */
 	public void nextStage()
 	{
 		stage++; // go up one stage
@@ -132,12 +153,18 @@ public class BetaUI extends JFrame
 		log("Entering Stage " + stage); // add to log
 	}
 
+	/**
+	 * opens the shop window.
+	 */
 	public void openShop()
 	{
 		new Shop(this, player).setVisible(true);
 	}
 
 	// === helper / utility methods ===
+	/**
+	 * refreshes all ui elements to reflect current game state.
+	 */
 	public void refreshAll()
 	{
 		lblStage.setText("Stage " + stage); // update top label
@@ -149,23 +176,37 @@ public class BetaUI extends JFrame
 
 	}
 
+	/**
+	 * returns an array of defeated boss names.
+	 *
+	 * @return defeated boss names
+	 */
 	public String[] getDefeatedBossArray()
 	{
 		return defeatedBosses.toArray(new String[0]);
 	}
 
+	/**
+	 * marks a boss as defeated.
+	 *
+	 * @param name boss class name
+	 */
 	public void markBossDefeated(String name)
 	{
 		defeatedBosses.add(name);
 	}
 
-	// unlock next stage button (called from battle panel)
+	/**
+	 * enables the next stage button.
+	 */
 	public void enableNextStage()
 	{
 		controlPanel.enableNextStage();
 	}
 
-	// restart everything after defeat
+	/**
+	 * resets the entire game after player defeat.
+	 */
 	public void resetGame()
 	{
 		stage = 1; // go back to stage 1
@@ -179,7 +220,11 @@ public class BetaUI extends JFrame
 		log("You have been defeated! Restarting Game."); // log message
 	}
 
-	// print messages to the right side log
+	/**
+	 * appends a message to the game log.
+	 *
+	 * @param msg message to log
+	 */
 	public void log(String msg)
 	{
 		logArea.append(msg + "\n"); // add message to log area
@@ -188,7 +233,9 @@ public class BetaUI extends JFrame
 																		// bottom
 	}
 
-	// show instructions when game starts
+	/**
+	 * prints gameplay instructions to the log.
+	 */
 	private void appendHowToPlay()
 	{
 		log("Welcome to Epic Brawlers!");
@@ -205,7 +252,12 @@ public class BetaUI extends JFrame
 		log("---------------------------------------------");
 	}
 
-	// pick which boss appears for a given stage number
+	/**
+	 * creates the appropriate boss for a given stage.
+	 *
+	 * @param s stage number
+	 * @return boss instance
+	 */
 	private BaseBoss createBossForStage(int s)
 	{
 		if (s == 1) return new BattleBee(s); // easy starter boss
@@ -223,6 +275,12 @@ public class BetaUI extends JFrame
 		}
 	}
 
+	/**
+	 * returns the base stage a boss type originates from.
+	 *
+	 * @param name boss class name
+	 * @return base stage number
+	 */
 	private int getBaseStageForBoss(String name)
 	{
 		return switch (name)
@@ -235,7 +293,11 @@ public class BetaUI extends JFrame
 		};
 	}
 
-	// handles rebattling
+	/**
+	 * starts a rebattle against a previously defeated boss.
+	 *
+	 * @param bossName boss to rebattle
+	 */
 	public void replayBoss(String bossName)
 	{
 		int baseStage = getBaseStageForBoss(bossName); // figure out what stage
@@ -265,6 +327,9 @@ public class BetaUI extends JFrame
 															// see
 	}
 
+	/**
+	 * saves the current game state to the default save file.
+	 */
 	public void saveGame()
 	{
 		try
@@ -291,6 +356,9 @@ public class BetaUI extends JFrame
 		}
 	}
 
+	/**
+	 * loads the game state from the default save file.
+	 */
 	public void loadGame()
 	{
 		try
@@ -349,6 +417,12 @@ public class BetaUI extends JFrame
 		}
 	}
 
+	
+	/**
+ 	* saves the current game state to a numbered save slot.
+ 	*
+ 	* @param slot the save slot number to write to
+ 	*/
 	public void saveGameToSlot(int slot)
 	{
 		try
@@ -375,6 +449,11 @@ public class BetaUI extends JFrame
 		}
 	}
 
+	/**
+ 	* loads a game state from a numbered save slot.
+ 	*
+ 	* @param slot the save slot number to load from
+ 	*/
 	public void loadGameFromSlot(int slot)
 	{
 		try
@@ -433,6 +512,12 @@ public class BetaUI extends JFrame
 		}
 	}
 
+	/**
+ 	* returns a short description of a save slot for display in menus.
+ 	*
+ 	* @param slot the slot number to inspect
+ 	* @return formatted slot description
+ 	*/
 	private String getSlotDescription(int slot)
 	{
 		java.io.File f = new java.io.File("save" + slot + ".dat"); // check slot
@@ -457,6 +542,9 @@ public class BetaUI extends JFrame
 		}
 	}
 
+	/**
+ 	* displays the save menu allowing the player to choose a save slot.
+ 	*/
 	public void showSaveMenu()
 	{
 		String[] options = { "Save to Slot 1", "Save to Slot 2", "Cancel" }; // options
@@ -476,6 +564,9 @@ public class BetaUI extends JFrame
 		else if (choice == 1) saveGameToSlot(2); // user picked slot 2
 	}
 
+	/**
+ 	* displays the load menu allowing the player to choose a save slot to load.
+ 	*/
 	public void showLoadMenu()
 	{
 		String slot1 = getSlotDescription(1); // get info or "empty"
@@ -494,7 +585,11 @@ public class BetaUI extends JFrame
 		else if (choice == 1 && slot2.contains("Stage")) loadGameFromSlot(2);
 	}
 
-	// entry point to launch the whole game
+	/**
+ 	* entry point to launch the whole game.
+ 	*
+ 	* @param args command line arguments
+ 	*/
 	public static void main(String[] args)
 	{
 		// make sure ui runs safely on the swing thread

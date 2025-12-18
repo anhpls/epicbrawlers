@@ -1,3 +1,7 @@
+/**
+ * utility helper class.
+ * provides common formatting used across the game.
+ */
 public class Utils
 {
 
@@ -5,7 +9,13 @@ public class Utils
 	public static final java.text.NumberFormat NF_COMMA = java.text.NumberFormat
 			.getIntegerInstance();
 
-	// this method shortens big numbers into readable formats (ex: 1.2K, 3.4M)
+	/**
+	 * formats large numbers into short, readable strings.
+	 * examples: 950 -> "950", 1200 -> "1.2K", 3_400_000 -> "3.4M"
+	 *
+	 * @param n the number to format
+	 * @return formatted string representation
+	 */
 	public static String fmt(long n)
 	{
 		// if it's less than 1000, just show the number normally

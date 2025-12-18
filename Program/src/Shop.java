@@ -2,13 +2,16 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.NumberFormat;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * shop dialog that allows the player to purchase upgrades and consumables.
+ * handles weapon upgrades, hp upgrades, potions, and dragon slayer items.
+ */
 public class Shop extends JDialog
 {
 
@@ -30,6 +33,12 @@ public class Shop extends JDialog
 	private static final int DRAGON_POTION_COST = 30_000; // late-game dragon
 															// counter
 
+	/**
+	 * constructs the shop dialog.
+	 *
+	 * @param ui reference to the main ui
+	 * @param player reference to the player
+	 */
 	public Shop(BetaUI ui, Player player)
 	{
 		super(ui, "Shop", true); // modal popup shop so user can't click behind
@@ -96,7 +105,9 @@ public class Shop extends JDialog
 		refreshShop();
 	}
 
-	// updates all button text and enabled/disabled states
+	/**
+	 * updates all shop button text, icons, and enabled states.
+	 */
 	public void refreshShop()
 	{
 		int potionCost = 25; // cost to buy potion
@@ -154,7 +165,13 @@ public class Shop extends JDialog
 		btnDragonPotion.setEnabled(player.getGold() >= DRAGON_POTION_COST);
 	}
 
-	// speicific icon sizes
+	/**
+	 * loads and scales an icon for shop buttons.
+	 *
+	 * @param path image path
+	 * @param size icon size
+	 * @return scaled image icon
+	 */
 	private javax.swing.ImageIcon loadIcon(String path, int size)
 	{
 		java.awt.Image img = new javax.swing.ImageIcon(path).getImage(); // load
@@ -165,7 +182,11 @@ public class Shop extends JDialog
 		return new javax.swing.ImageIcon(scaled); // return shrunk icon
 	}
 
-	// weapon tier order
+	/**
+	 * returns the next weapon tier name, or null if maxed.
+	 *
+	 * @return next weapon tier
+	 */
 	private String getNextWeaponTier()
 	{
 		return switch (player.getWeapon().getName())
@@ -177,7 +198,11 @@ public class Shop extends JDialog
 		};
 	}
 
-	// prices for upgrading to the next weapon tier
+	/**
+	 * returns the gold cost for upgrading to the next weapon tier.
+	 *
+	 * @return upgrade cost
+	 */
 	private int getNextTierCost()
 	{
 		return switch (String.valueOf(getNextWeaponTier()))
@@ -189,7 +214,9 @@ public class Shop extends JDialog
 		};
 	}
 
-	// buying a potion
+	/**
+	 * handles purchasing a health potion.
+	 */
 	private void buyPotion()
 	{
 		int cost = 25;
@@ -207,7 +234,9 @@ public class Shop extends JDialog
 		refreshShop(); // update prices / buttons in shop window
 	}
 
-	// buy dragon slayer potion (breaks dragon armor)
+	/**
+	 * handles purchasing a dragon slayer potion.
+	 */
 	private void buyDragonPotion()
 	{
 		// check if player can afford it
@@ -226,7 +255,9 @@ public class Shop extends JDialog
 		refreshShop();
 	}
 
-	// level up current weapon
+	/**
+	 * handles leveling up the current weapon.
+	 */
 	private void levelUpWeapon()
 	{
 		BaseWeapon weapon = player.getWeapon(); // get current weapon
@@ -245,7 +276,9 @@ public class Shop extends JDialog
 		refreshShop(); // refresh shop
 	}
 
-	// upgrade to the next weapon tier
+	/**
+	 * handles upgrading to the next weapon tier.
+	 */
 	private void upgradeWeaponTier()
 	{
 		String next = getNextWeaponTier(); // what is the next weapon
@@ -275,7 +308,9 @@ public class Shop extends JDialog
 		refreshShop(); // refresh shop items
 	}
 
-	// permanently upgrade player's max hp
+	/**
+	 * handles permanently upgrading the player's max hp.
+	 */
 	private void upgradeMaxHP()
 	{
 		int stage = ui.getStage(); // get current stage

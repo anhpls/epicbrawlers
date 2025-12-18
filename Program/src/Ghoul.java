@@ -1,5 +1,14 @@
+/**
+ * ghoul boss class.
+ * represents a mid-game boss that can heal itself through life drain attacks.
+ */
 public class Ghoul extends BaseBoss
 {
+	/**
+	 * constructs a ghoul boss for a given stage.
+	 *
+	 * @param stage the stage this ghoul appears on
+	 */
 	public Ghoul(int stage)
 	{
 		// call the base class with scaling values for hp, attack, and gold
@@ -9,6 +18,13 @@ public class Ghoul extends BaseBoss
 				25 + (stage * 70)); // gold reward increases too
 	}
 
+	/**
+	 * performs the ghoul's special attack.
+	 * drain life deals increased damage and heals the ghoul
+	 * for a portion of the damage dealt.
+	 *
+	 * @return damage dealt by the special attack
+	 */
 	@Override
 	protected long specialAttack()
 	{

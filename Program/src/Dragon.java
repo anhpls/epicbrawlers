@@ -1,9 +1,19 @@
+/**
+ * dragon boss class.
+ * represents a late-game boss with very high health, strong attacks,
+ * passive damage reduction, and a powerful special move.
+ */
 public class Dragon extends BaseBoss
 {
 	// dragon takes less damage overall (its tough scales reduce hits)
 	private static final double DAMAGE_TAKEN = 0.80; // only takes 80% of
 														// incoming dmg
 
+	/**
+	 * constructs a dragon boss for a given stage.
+	 *
+	 * @param stage the stage this dragon appears on
+	 */
 	public Dragon(int stage)
 	{
 		// call the BaseBoss constructor with custom scaling values
@@ -21,6 +31,13 @@ public class Dragon extends BaseBoss
 				200 * stage); // gives a large gold reward when defeated
 	}
 
+	/**
+	 * applies damage to the dragon, accounting for armor reduction
+	 * and dragon slayer potion effects.
+	 *
+	 * @param dmg the incoming damage
+	 * @param player the player dealing the damage
+	 */
 	public void takeDamage(int dmg, Player player)
 	{
 		// if dragon potion is active, ignore armor
@@ -35,6 +52,12 @@ public class Dragon extends BaseBoss
 		super.takeDamage(reduced); // actually subtract hp
 	}
 
+	/**
+	 * performs the dragon's special attack.
+	 * inferno breath deals triple base attack damage.
+	 *
+	 * @return damage dealt by the special attack
+	 */
 	@Override
 	// inferno breath — massive fire blast that hits 3x harder
 	protected long specialAttack()

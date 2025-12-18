@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.text.NumberFormat;
-
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -18,7 +17,10 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 
-// this panel handles all battle visuals and combat logic
+/**
+ * panel responsible for rendering the battle screen and handling combat logic.
+ * manages player/boss visuals, hp bars, attack flow, and battle popups.
+ */
 public class BattlePanel extends JPanel
 {
 	private Player player; // current player
@@ -53,7 +55,13 @@ public class BattlePanel extends JPanel
 	// number formatter for gold
 	private static final NumberFormat NF = NumberFormat.getIntegerInstance();
 
-	// constructor for battle panel
+	/**
+	 * constructs the battle panel with a player, boss, and ui reference.
+	 *
+	 * @param player the active player
+	 * @param boss the active boss
+	 * @param ui reference to the main ui controller
+	 */
 	public BattlePanel(Player player, BaseBoss boss, BetaUI ui)
 	{
 		this.player = player;
@@ -93,23 +101,36 @@ public class BattlePanel extends JPanel
 		add(arena);
 	}
 
-	// builds a character panel with hp bar + icon
+	/**
+	 * builds a character column containing an hp bar and icon.
+	 *
+	 * @param icon the character icon label
+	 * @param bar the health bar
+	 * @param bg optional background color
+	 * @return configured character panel
+	 */
 	private JPanel createCharacterPanel(JLabel icon, JProgressBar bar, Color bg)
 	{
 		JPanel col = new JPanel(new BorderLayout(8, 8)); // layout for each side
 		styleHPBar(bar); // apply custom bar style
 		icon.setFont(new Font("SansSerif", Font.BOLD, 72)); // big player/boss
-															// text
+
+		// text
 		icon.setHorizontalAlignment(SwingConstants.CENTER);
 		icon.setVerticalAlignment(SwingConstants.CENTER);
 		icon.setPreferredSize(new Dimension(300, 250)); // give label space
-														// to show the image
+
+		// to show the image
 		col.add(bar, BorderLayout.NORTH); // hp bar on top
 		col.add(icon, BorderLayout.CENTER); // icon in center
 		return col; // return built column
 	}
 
-	// style for hp bars
+	/**
+	 * applies consistent styling to an hp progress bar.
+	 *
+	 * @param bar the progress bar to style
+	 */
 	private void styleHPBar(JProgressBar bar)
 	{
 		bar.setUI(new BasicProgressBarUI()
@@ -131,7 +152,11 @@ public class BattlePanel extends JPanel
 		bar.setFont(new Font("SansSerif", Font.BOLD, 14)); // custom font
 	}
 
-	// vertical list of player stats
+	/**
+	 * creates the vertical list of player stat labels.
+	 *
+	 * @return player stats panel
+	 */
 	private JPanel createPlayerStats()
 	{
 		JPanel stats = new JPanel(); // panel for stats
@@ -147,7 +172,11 @@ public class BattlePanel extends JPanel
 		return stats; // return finished panel
 	}
 
-	// vertical list of boss stats
+	/**
+	 * creates the vertical list of boss stat labels.
+	 *
+	 * @return boss stats panel
+	 */
 	private JPanel createBossStats()
 	{
 		JPanel stats = new JPanel(); // panel for stats
@@ -157,7 +186,11 @@ public class BattlePanel extends JPanel
 		return stats; // return panel
 	}
 
-	// popup for when player wins a battle
+	/**
+	 * shows a victory popup after defeating a boss.
+	 *
+	 * @param goldEarned gold awarded from the fight
+	 */
 	private void showVictoryPopup(int goldEarned)
 	{
 
@@ -186,12 +219,19 @@ public class BattlePanel extends JPanel
 		// if player stays, they can click next stage manually
 	}
 
+	/**
+	 * enables or disables rebattle mode.
+	 *
+	 * @param rebattleMode true if rebattle mode is active
+	 */
 	public void setRebattleMode(boolean rebattleMode)
 	{
 		this.rebattleMode = rebattleMode;
 	}
 
-	// shows popup when player loses
+	/**
+	 * shows the defeat popup and resets the game.
+	 */
 	private void showDefeatPopup()
 	{
 		JOptionPane optionPane = new JOptionPane(
@@ -212,7 +252,9 @@ public class BattlePanel extends JPanel
 		ui.resetGame(); // restart game after closing
 	}
 
-	// handles logic when attack button is pressed
+	/**
+	 * handles combat logic when the attack button is pressed.
+	 */
 	public void handleAttack()
 	{
 		if (!player.isAlive())
@@ -302,7 +344,9 @@ public class BattlePanel extends JPanel
 		}
 	}
 
-	// handles potion button click
+	/**
+	 * handles using a health potion during battle.
+	 */
 	public void handlePotion()
 	{
 		if (!player.isAlive())
@@ -327,7 +371,9 @@ public class BattlePanel extends JPanel
 		ui.refreshAll();
 	}
 
-	// handles dragon slayer potion activation
+	/**
+	 * handles activating a dragon slayer potion.
+	 */
 	public void handleDragonPotion()
 	{
 		if (!player.isAlive()) // can’t use while dead
@@ -346,7 +392,11 @@ public class BattlePanel extends JPanel
 		refreshStats(); // update UI immediately
 	}
 
-	// shows quick emoji animation when hit happens
+	/**
+	 * displays an emoji hit effect.
+	 *
+	 * @param emoji the emoji to display
+	 */
 	private void flashHit(String emoji)
 	{
 		lblHit.setText(emoji); // set emoji
@@ -356,7 +406,11 @@ public class BattlePanel extends JPanel
 		t.start(); // start timer
 	}
 
-	// update the current boss
+	/**
+	 * updates the current boss and refreshes the ui.
+	 *
+	 * @param newBoss the new boss instance
+	 */
 	public void setBoss(BaseBoss newBoss)
 	{
 		this.boss = newBoss; // assign new boss
@@ -368,7 +422,11 @@ public class BattlePanel extends JPanel
 		refreshStats(); // refresh info
 	}
 
-	// update the current player
+	/**
+	 * updates the current player and refreshes the ui.
+	 *
+	 * @param newPlayer the new player instance
+	 */
 	public void setPlayer(Player newPlayer)
 	{
 		this.player = newPlayer; // assign new player
@@ -376,7 +434,9 @@ public class BattlePanel extends JPanel
 		refreshStats(); // refresh info
 	}
 
-	// update both hp bars to match live data
+	/**
+	 * refreshes both hp bars to match current values.
+	 */
 	public void refreshBars()
 	{
 		// max hp for player
@@ -397,7 +457,9 @@ public class BattlePanel extends JPanel
 				Utils.fmt(boss.getHP()) + "/" + Utils.fmt(boss.getMaxHP()));
 	}
 
-	// update stats labels
+	/**
+	 * refreshes all stat labels shown in the panel.
+	 */
 	public void refreshStats()
 	{
 		// show current weapon name, level, and damage
@@ -426,7 +488,14 @@ public class BattlePanel extends JPanel
 		lblBossSpecial.setText(" Special: " + getBossSpecialText());
 	}
 
-	// resize images
+	/**
+	 * loads and scales an image icon.
+	 *
+	 * @param path image path
+	 * @param width target width
+	 * @param height target height
+	 * @return scaled image icon
+	 */
 	private javax.swing.ImageIcon loadScaledIcon(String path, int width,
 			int height)
 	{
@@ -436,7 +505,12 @@ public class BattlePanel extends JPanel
 		return new javax.swing.ImageIcon(scaled);
 	}
 
-	// get different image for each boss
+	/**
+	 * returns a fallback icon for a given boss name.
+	 *
+	 * @param bossName the boss class name
+	 * @return boss image icon
+	 */
 	private javax.swing.ImageIcon getBossIcon(String bossName)
 	{
 		switch (bossName)
@@ -456,7 +530,11 @@ public class BattlePanel extends JPanel
 		}
 	}
 
-	// returns short text describing boss's special ability
+	/**
+	 * returns a short description of the boss's special attack.
+	 *
+	 * @return special attack description text
+	 */
 	private String getBossSpecialText()
 	{
 		String n = boss.getClass().getSimpleName(); // boss type

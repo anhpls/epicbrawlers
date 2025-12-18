@@ -1,11 +1,13 @@
 import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-// this panel holds all the bottom buttons (attack, potion, next, shop,
-// rebattle)
+/**
+ * panel that contains all main gameplay control buttons.
+ * handles user input for combat actions, shop access, saving/loading,
+ * and rebattling previously defeated bosses.
+ */
 public class ControlPanel extends JPanel
 {
 	// buttons that need to be accessed later
@@ -13,7 +15,11 @@ public class ControlPanel extends JPanel
 	private final JButton btnPotion;
 	private final JButton btnDragonPotion; // dragon slayer potion button
 
-	// constructor builds the row of buttons
+	/**
+	 * constructs the control panel and wires buttons to ui actions.
+	 *
+	 * @param ui reference to the main game ui
+	 */
 	public ControlPanel(BetaUI ui)
 	{
 		// flow layout to line up buttons in the center
@@ -79,25 +85,37 @@ public class ControlPanel extends JPanel
 
 	}
 
-	// enable the next stage button after winning
+	/**
+	 * enables the next stage button after a boss is defeated.
+	 */
 	public void enableNextStage()
 	{
 		btnNext.setEnabled(true);
 	}
 
-	// disable next stage again when starting a new round
+	/**
+	 * disables the next stage button when starting a new stage.
+	 */
 	public void disableNextStage()
 	{
 		btnNext.setEnabled(false);
 	}
 
-	// used by the ui to toggle potion button based on potion count
+	/**
+	 * toggles the potion button based on player potion count.
+	 *
+	 * @param enabled true if potions are available
+	 */
 	public void setPotionButtonEnabled(boolean enabled)
 	{
 		btnPotion.setEnabled(enabled);
 	}
 
-	// used by the ui to toggle dragon potion button based on count
+	/**
+	 * toggles the dragon slayer potion button based on potion count.
+	 *
+	 * @param enabled true if dragon potions are available
+	 */
 	public void setDragonPotionButtonEnabled(boolean enabled)
 	{
 		btnDragonPotion.setEnabled(enabled);

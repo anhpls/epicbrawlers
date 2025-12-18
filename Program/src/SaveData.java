@@ -2,7 +2,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-// a simple container for all player + stage data
+/**
+ * container class for saving and loading game state.
+ * stores player stats, stage progress, equipment, and defeated bosses.
+ */
 public class SaveData implements Serializable
 {
 	// what stage the player is currently on
@@ -35,7 +38,20 @@ public class SaveData implements Serializable
 	// records bosses that user has already defeated
 	public Set<String> defeatedBosses = new HashSet<>();
 
-	// constructor builds the savedata object with all needed values
+	/**
+	 * constructs a savedata object containing all relevant game state.
+	 *
+	 * @param stage current stage
+	 * @param gold current gold amount
+	 * @param potions current potion count
+	 * @param weaponName name of equipped weapon
+	 * @param weaponLevel weapon level
+	 * @param maxHP player max hp
+	 * @param currentHP player current hp
+	 * @param hpUpgradeCount number of hp upgrades purchased
+	 * @param dragonPotionHits remaining dragon potion hits
+	 * @param defeatedBosses set of defeated boss names
+	 */
 	public SaveData(int stage, int gold, int potions, String weaponName,
 			int weaponLevel, long maxHP, long currentHP, int hpUpgradeCount,
 			int dragonPotionHits, Set<String> defeatedBosses)
@@ -47,8 +63,8 @@ public class SaveData implements Serializable
 		this.weaponLevel = weaponLevel; // save weapon level
 		this.maxHP = maxHP; // save max hp
 		this.currentHP = currentHP; // save current hp
-		this.hpUpgradeCount = hpUpgradeCount;
-		this.dragonPotionHits = dragonPotionHits;
+		this.hpUpgradeCount = hpUpgradeCount; // save hp upgrade count
+		this.dragonPotionHits = dragonPotionHits; // save num of dragon potions
 		this.defeatedBosses = new HashSet<>(defeatedBosses); // saves list of
 																// bosses that
 																// user has

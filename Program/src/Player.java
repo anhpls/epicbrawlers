@@ -1,3 +1,8 @@
+/**
+ * represents the player character.
+ * stores stats, equipment, consumables, combat logic,
+ * and save/load support for gameplay progression.
+ */
 public class Player
 {
 	// player stats
@@ -15,7 +20,9 @@ public class Player
 	// current weapon
 	private BaseWeapon weapon;
 
-	// default player stats: 100 HP, 0 gold, stick, 0 health pots
+	/**
+	 * constructs a new player with default starting stats.
+	 */
 	public Player()
 	{
 		this.gold = 0; // start broke lol
@@ -26,58 +33,113 @@ public class Player
 	}
 
 	// === getters ===
+	/**
+	 * returns the player's current gold.
+	 *
+	 * @return gold amount
+	 */
 	public int getGold()
 	{
 		return gold; // return gold amount
 	}
 
+	/**
+	 * returns the player's current hp.
+	 *
+	 * @return current hp
+	 */
 	public long getHP()
 	{
 		return hp; // return current hp
 	}
 
+	/**
+	 * returns the player's maximum hp.
+	 *
+	 * @return max hp
+	 */
 	public long getMaxHP()
 	{
 		return maxHP; // return max hp
 	}
 
+	/**
+	 * returns how many health potions the player has.
+	 *
+	 * @return potion count
+	 */
 	public int getPotionCount()
 	{
 		return potionCount; // return how many potions left
 	}
 
+	/**
+	 * returns how many times max hp has been upgraded.
+	 *
+	 * @return hp upgrade count
+	 */
 	public int getHpUpgradeCount()
 	{
 		return hpUpgradeCount; // how many times the user has upgraded health
 	}
 
+	/**
+	 * returns the currently equipped weapon.
+	 *
+	 * @return equipped weapon
+	 */
 	public BaseWeapon getWeapon()
 	{
 		return weapon; // return equipped weapon
 	}
 
+	/**
+	 * returns remaining armor-breaking hits from dragon potions.
+	 *
+	 * @return dragon potion hits
+	 */
 	public int getDragonPotionHits()
 	{
 		return dragonPotionHits; // how many armor-breaking hits are left
 	}
 
+	/**
+	 * returns how many dragon slayer potions the player has.
+	 *
+	 * @return dragon potion count
+	 */
 	public int getDragonPotionCount()
 	{
 		return dragonPotionCount; // how many dragon slayer potions we have
 	}
 
+	/**
+	 * adds dragon slayer potions to the inventory.
+	 *
+	 * @param amount number of potions to add
+	 */
 	public void addDragonPotions(int amount)
 	{
 		if (amount > 0) // only add if positive
 			dragonPotionCount += amount; // increase potion count
 	}
 
+	/**
+	 * directly sets dragon potion count.
+	 *
+	 * @param count potion count
+	 */
 	public void setDragonPotionCount(int count)
 	{
 		dragonPotionCount = Math.max(0, count); // clamp
 	}
 
 	// === gold handling ===
+	/**
+	 * adds gold to the player.
+	 *
+	 * @param amount gold to add
+	 */
 	public void addGold(int amount)
 	{
 		// add gold if amount is positive
@@ -87,6 +149,12 @@ public class Player
 		}
 	}
 
+	/**
+	 * attempts to spend gold.
+	 *
+	 * @param amount gold to spend
+	 * @return true if purchase succeeded
+	 */
 	public boolean spendGold(int amount)
 	{
 		if (amount <= 0) return false; // can't spend 0 or negative amounts
@@ -100,11 +168,21 @@ public class Player
 	}
 
 	// === health handling ===
+	/**
+	 * checks whether the player is alive.
+	 *
+	 * @return true if hp is greater than zero
+	 */
 	public boolean isAlive()
 	{
 		return hp > 0; // check if player is still alive
 	}
 
+	/**
+	 * applies damage to the player.
+	 *
+	 * @param dmg incoming damage
+	 */
 	public void takeDamage(int dmg)
 	{
 		// take damage but don't go below 0
@@ -114,13 +192,19 @@ public class Player
 		}
 	}
 
+	/**
+	 * fully restores player hp.
+	 */
 	public void healToFull()
 	{
 		hp = maxHP; // heal completely
 	}
 
-	// permanent max HP increase (via shop)
-	// gives a mini heal for same amount
+	/**
+	 * permanently increases max hp and heals by the same amount.
+	 *
+	 * @param increase hp increase amount
+	 */
 	public void increaseMaxHP(long increase)
 	{
 		if (increase <= 0) return;
@@ -128,6 +212,13 @@ public class Player
 		hp = Math.min(maxHP, hp + increase); // heal some too
 	}
 
+	/**
+	 * purchases a permanent max hp upgrade.
+	 *
+	 * @param stage current stage
+	 * @param gold unused parameter kept for compatibility
+	 * @return true if upgrade was successful
+	 */
 	public boolean buyMaxHPUpgrade(int stage, int gold)
 	{
 		// cost grows based on how many times upgrade was used
@@ -158,7 +249,9 @@ public class Player
 		return true;
 	}
 
-	// auto hp boost per stage (mild scaling)
+	/**
+	 * automatically increases max hp when advancing stages.
+	 */
 	// bosses scale faster so player still feels pressure to upgrade
 	public void autoStageHPBump()
 	{
@@ -167,6 +260,11 @@ public class Player
 	}
 
 	// === potion logic===
+	/**
+	 * adds health potions to the inventory.
+	 *
+	 * @param pot number of potions to add
+	 */
 	public void addPotions(int pot)
 	{
 		// add potions if amount > 0
@@ -176,11 +274,21 @@ public class Player
 		}
 	}
 
+	/**
+	 * sets hp upgrade count directly.
+	 *
+	 * @param count upgrade count
+	 */
 	public void setHpUpgradeCount(int count)
 	{
 		this.hpUpgradeCount = Math.max(0, count);
 	}
 
+	/**
+	 * uses a health potion during battle.
+	 *
+	 * @return true if potion was consumed
+	 */
 	public boolean usePotionInBattle()
 	{
 		// can't use potion if there's none left
@@ -197,11 +305,21 @@ public class Player
 		return true;
 	}
 
+	/**
+	 * sets remaining dragon potion hits.
+	 *
+	 * @param hits hit count
+	 */
 	public void setDragonPotionHits(int hits)
 	{
 		this.dragonPotionHits = Math.max(0, hits);
 	}
 
+	/**
+	 * consumes one armor-breaking hit if available.
+	 *
+	 * @return true if a hit was consumed
+	 */
 	public boolean consumeDragonPotionHit()
 	{
 		if (dragonPotionHits > 0)
@@ -212,7 +330,11 @@ public class Player
 		return false;
 	}
 
-	// activate the dragon slayer potion
+	/**
+	 * activates a dragon slayer potion.
+	 *
+	 * @return true if potion was used
+	 */
 	public boolean useDragonPotion()
 	{
 		if (dragonPotionCount <= 0) // no potions left
@@ -224,6 +346,12 @@ public class Player
 	}
 
 	// === combat & equipment ===
+	
+	/**
+	 * calculates attack damage based on equipped weapon.
+	 *
+	 * @return attack damage
+	 */
 	public int attackDamage()
 	{
 		long dmg = weapon.getDamage();
@@ -234,6 +362,11 @@ public class Player
 		return (int) dmg;
 	}
 
+	/**
+	 * equips a new weapon.
+	 *
+	 * @param newWeapon weapon to equip
+	 */
 	public void setWeapon(BaseWeapon newWeapon)
 	{
 		// swap weapon if not null
@@ -244,26 +377,42 @@ public class Player
 	}
 
 	// === save/load ===
-	// directly set current HP (used when loading a save file)
+	/**
+	 * directly sets current hp.
+	 *
+	 * @param hp hp value
+	 */
 	public void setHP(long hp)
 	{
 		this.hp = Math.max(0, Math.min(hp, maxHP));
 	}
 
-	// directly set max HP (used when loading a save file)
+	/**
+	 * directly sets max hp.
+	 *
+	 * @param newMax new max hp
+	 */
 	public void setMaxHPDirect(long newMax)
 	{
 		this.maxHP = newMax;
 		this.hp = Math.min(hp, maxHP);
 	}
 
-	// set potion count (used for loading)
+	/**
+	 * sets potion count.
+	 *
+	 * @param count potion count
+	 */
 	public void setPotionCount(int count)
 	{
 		this.potionCount = Math.max(0, count);
 	}
 
-	// set gold (used for loading)
+	/**
+	 * sets gold amount.
+	 *
+	 * @param amount gold value
+	 */
 	public void setGold(int amount)
 	{
 		this.gold = Math.max(0, amount);

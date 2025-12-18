@@ -1,6 +1,15 @@
+/**
+ * a simple early-game boss used as an introductory enemy.
+ * battlebee has low damage and slight health scaling.
+ */
 public class BattleBee extends BaseBoss
 {
-	// tiny helper: an easy first fight with very low damage
+	// helper: an easy first fight with very low damage
+	/**
+	 * constructs a battlebee boss for a given stage.
+	 *
+	 * @param stage the stage this boss appears on
+	 */
 	public BattleBee(int stage)
 	{
 
@@ -12,6 +21,13 @@ public class BattleBee extends BaseBoss
 		);
 	}
 
+	/**
+	 * performs the battlebee's special attack.
+	 * triggers every third attack and deals slightly increased damage
+	 * with a small self-damage recoil.
+	 *
+	 * @return damage dealt by the special attack
+	 */
 	@Override
 	protected long specialAttack()
 	{

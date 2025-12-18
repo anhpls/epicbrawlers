@@ -1,5 +1,15 @@
+/**
+ * slime boss class.
+ * represents a steadily scaling boss with consistent growth
+ * and a high-risk, high-damage special attack.
+ */
 public class Slime extends BaseBoss
 {
+	/**
+	 * constructs a slime boss for a given stage.
+	 *
+	 * @param stage the stage this slime appears on
+	 */
 	public Slime(int stage)
 	{
 		// slime scales smoother but has consistent growth
@@ -12,6 +22,12 @@ public class Slime extends BaseBoss
 				40 * stage); // gold reward increases linearly
 	}
 
+	/**
+	 * performs the slime's special attack.
+	 * triple slam deals heavy damage but also causes self-damage.
+	 *
+	 * @return damage dealt by the special attack
+	 */
 	@Override
 	// "triple slam" — hits 3x harder but damages itself
 	protected long specialAttack()
